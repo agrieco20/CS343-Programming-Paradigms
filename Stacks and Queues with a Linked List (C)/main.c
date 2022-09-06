@@ -74,23 +74,40 @@ int main() {
     }
     HEAD.nextNode = &ptr[1];
     //--------
-//*/
-/*
+
+    //NEED TO IMPLEMENT REMOVE FUNCTIONS FOR BOTH STACK AND QUEUE
+///*
     //--------
     //Below will need to be implemented as a function in "linked_list.c" and later modified for when the Stack and Queue "structures" are added because the placement of where the nodes need to be will change depending on which "structure" is being used
     //Following code asks how many nodes the user would like to remove [POP] from the Linked List
     changeNodeNum = 0;
     previousNodeTotal = totalNumNodes - 1;//Updates previous Linked List node count ["-1" because the elements are added where the "TAIL" used to be and the "TAIL" is automatically reassigned to the end of the Linked List]
-    printf("How many nodes would you like added to the Linked List? \n");
+    printf("How many nodes would you like to be removed from the Linked List? \n");
     scanf("%d", &changeNodeNum);
-    totalNumNodes+=changeNodeNum; //Updates the counter for the total number of nodes currently in the Linked List
+    totalNumNodes-=(changeNodeNum-1); //Updates the counter for the total number of nodes currently in the Linked List
 
+    ///*
+    //---
+    //WORKS: STACK Exclusive [Above lines + the ones between "//---" right here + ones after "QUEUE Exclusive" execute a perfect STACK removal of elements]:
     ptr = realloc(ptr, (totalNumNodes * sizeof(struct listNode)));//Allocates the number of required nodes the user wishes to add to the Linked List
+    //---
+    // */
+
+    /*
+    //---
+    //INCOMPLETE/NOT WORKING: QUEUE Exclusive [Above lines - "STACK EXCLUSIVE" + the ones between "//---" right here + ones after this execute a perfect QUEUE removal of elements]:
+    for (int i = 1; i < (totalNumNodes - changeNodeNum - 1); i++){
+        ptr[i].value = ptr[i+changeNodeNum].value;
+        ptr[i].nextNode = ptr[i+changeNodeNum].nextNode;
+    }
+    ptr = realloc(ptr, (totalNumNodes * sizeof(struct listNode)));//Allocates the number of required nodes the user wishes to add to the Linked List
+    //---
+     */
 
     ptr[0]=HEAD;
     ptr[totalNumNodes-1] = TAIL;
     //--------
-*/
+//*/
 
     //--------
     //Below will need to be implemented as a "QUEUE display function in linked_list[.h/.c] or in queue[.h/.c]"
