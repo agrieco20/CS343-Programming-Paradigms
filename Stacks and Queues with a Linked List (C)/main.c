@@ -182,13 +182,16 @@ int main() {
     /*
     printf("Memory Address: %p\n", &HEAD.nextNode->nextNode->value); //TEMPORARY TEST
     printf("Value at Next Address: %d\n", HEAD.nextNode->nextNode->value); //TEMPORARY TEST
-
+    */
+    // /*
+    //Test, doesn't fully work yet and will more than likely need to be converted into a self-sustainable function without the iterator ("ptr[i]") but prints out all values stored in the Linked List
     int i = 0;
-    while (ptr[i].nextNode != NULL) {
-        printf("Memory Address: %p\n", &ptr[i].nextNode); //TEMPORARY
+    while (ptr[i].nextNode != NULL /*&& ptr[i].value != 0*/) {
+        printf("Node Value: %d\n", ptr[i].nextNode->value); //TEMPORARY, prints node values
+        //printf("Node Memory Address: %p\n", &ptr[i].nextNode->value); //TEMPORARY, prints node addresses
         i++;
     }
-     */
+    // */
 
     free(ptr);
     //printf("Hello, World!\n");
