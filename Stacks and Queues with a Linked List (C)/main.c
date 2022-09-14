@@ -42,9 +42,11 @@ int main() {
     ptr[0] = HEAD;
     ptr[1] = TAIL;
 
+    /*
     for (int i = 0; i<totalNumNodes; i++){ //TEMPORARY
         printf("Node %d = %d, %p\n", i, ptr[i].value, &ptr[i]);
     }
+     */
     //-------
 
     //printf("Thank you for using this Linked List simulator written in C!\nTo start, please type the number corresponding to the action you would like taken:\n");
@@ -78,8 +80,10 @@ int main() {
     HEAD.nextNode = &ptr[1]; //(&TAIL)
     //--------
 
+    /*
     printf("Memory Address held by Node after Head Node: %p\n",HEAD.nextNode); //TEMPORARY
     printf("Value held by Node after Head Node: %d\n",HEAD.nextNode->value); //TEMPORARY
+    */
 
     //NEED TO IMPLEMENT REMOVE FUNCTIONS FOR BOTH STACK AND QUEUE IN .h AND .c FILES
 ///*
@@ -94,26 +98,28 @@ int main() {
 
     ///*
     //---
-    //SEEMS TO WORK: STACK Exclusive [Above lines + the ones between "//---" right here + ones after "QUEUE Exclusive" execute a perfect STACK removal of elements]:
-    //ptr = realloc(ptr, (totalNumNodes * sizeof(struct listNode)));//Allocates the number of required nodes the user wishes to add to the Linked List
+    //WORKS: STACK Exclusive [Above lines + the ones between "//---" right here + ones after "QUEUE Exclusive" execute a perfect STACK removal of elements]:
+//    ptr = realloc(ptr, (totalNumNodes * sizeof(struct listNode)));//Allocates the number of required nodes the user wishes to add to the Linked List
     //---
     // */
 
     // /*
     //---
-    //INCOMPLETE/NOT WORKING: QUEUE Exclusive [Above lines - "STACK EXCLUSIVE" + the ones between "//---" right here + ones after this execute a perfect QUEUE removal of elements]:
+    //WORKING: QUEUE Exclusive [Above lines - "STACK EXCLUSIVE" + the ones between "//---" right here + ones after this execute a perfect QUEUE removal of elements]:
 
     //Resets the values of each node of the Linked List so that however many nodes the user wants deleted from the front of the QUEUE Linked List will be deleted from the front and replaced by any remaining nodes in the Linked List
     for (int i = 1; i<totalNumNodes; i++){
         ptr[i] = ptr[i+(changeNodeNum)];
     }
 
-    ptr = realloc(ptr, (totalNumNodes * sizeof(struct listNode)));//Allocates the number of required nodes the user wishes to add to the Linked List
+    ptr = realloc(ptr, (totalNumNodes * sizeof(struct listNode))); //Allocates the number of required nodes the user wishes to add to the Linked List
 
     HEAD.nextNode = &ptr[changeNodeNum]; //Resets HEAD Node so that it now looks at the new next Node in the Linked List
 
+    /*
     printf("Memory Address held by Node after Head Node: %p\n",HEAD.nextNode); //TEMPORARY
     printf("Value held by Node after Head Node: %d\n",HEAD.nextNode->value); //TEMPORARY
+    */
 
     //---
     // */
@@ -156,6 +162,7 @@ int main() {
 
     //printf("Number of Nodes in Linked List: %d", totalNumNodes); //TEMPORARY
 
+    /*
     for (int i = 0; i<totalNumNodes; i++){ //TEMPORARY
         printf("Node %d = %d, %p\n", i, ptr[i].value, &ptr[i]);
     }
@@ -164,13 +171,24 @@ int main() {
 
     //-----------
     //Test
-    /*
+
     printf("Head Value: %d\n", HEAD.value);
     //printf("HEAD Next Node Value: %d\n", HEAD.nextNode->value);
     printf("Node 1 Value: %d\n", ptr[1].value);
     printf("Next Node Value: %d\n", ptr[1].nextNode->value);
     */
     //-----------
+
+    /*
+    printf("Memory Address: %p\n", &HEAD.nextNode->nextNode->value); //TEMPORARY TEST
+    printf("Value at Next Address: %d\n", HEAD.nextNode->nextNode->value); //TEMPORARY TEST
+
+    int i = 0;
+    while (ptr[i].nextNode != NULL) {
+        printf("Memory Address: %p\n", &ptr[i].nextNode); //TEMPORARY
+        i++;
+    }
+     */
 
     free(ptr);
     //printf("Hello, World!\n");
