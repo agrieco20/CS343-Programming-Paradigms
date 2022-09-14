@@ -21,5 +21,13 @@ struct listNode createNewNode(int value, struct listNode *nextNode){
 //}
 
 //void pushList(){
-
 //}
+
+/*
+void test(struct listNode *test1){ //TEMPORARY, DOESN'T WORK
+    printf("%d",test1->value);
+    if (test1->nextNode != NULL) {
+        test(test1->nextNode);
+    }
+}
+ */

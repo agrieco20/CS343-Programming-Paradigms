@@ -22,3 +22,5 @@ void displayNodes();
 //Display all elements in list function [only the values]
 
 //void pushList();
+
+//void test(struct listNode *test1); //TEMPORARY, DOESN'T WORK

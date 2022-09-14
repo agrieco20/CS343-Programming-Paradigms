@@ -32,7 +32,7 @@ int main() {
     //-------
     //Following definitions need to be declared and initialized in linked_list[.h/.c]
     int totalNumNodes = 2; //Keeps count of how many total nodes are in the current Linked List [Starts at two so that the "HEAD" and "TAIL" nodes are also included]
-    int previousNodeTotal = 0; //Keeps count of how many total nodes there were in the previous Linked List to help iterate through the new one when assigning new node values
+    int previousNodeTotal = 0; //Continually keeps a count on where the previous end of the Linked List used to be (so that it will be easier to continue adding elements where the Linked List last left off)
     int changeNodeNum = 0; //User Input to add/remove a number of nodes from the Linked List
     int userInput_int = 0;
     struct listNode * ptr; //Pointer used to iterate through the Linked List
@@ -41,6 +41,10 @@ int main() {
     ptr = (struct listNode *) malloc((totalNumNodes * sizeof(struct listNode)));
     ptr[0] = HEAD;
     ptr[1] = TAIL;
+
+    for (int i = 0; i<totalNumNodes; i++){ //TEMPORARY
+        printf("Node %d = %d, %p\n", i, ptr[i].value, &ptr[i]);
+    }
     //-------
 
     //printf("Thank you for using this Linked List simulator written in C!\nTo start, please type the number corresponding to the action you would like taken:\n");
@@ -50,7 +54,7 @@ int main() {
     //Below will need to be implemented as a function in "linked_list.c" and later modified for when the Stack and Queue "structures" are added because the placement of where the nodes need to be will change depending on which "structure" is being used
     //Following code asks how many nodes the user would like to add [PUSH] to the Linked List
     changeNodeNum = 0;
-    previousNodeTotal = totalNumNodes - 1;//Updates previous Linked List node count ["-1" because the elements are added where the "TAIL" used to be and the "TAIL" is automatically reassigned to the end of the Linked List]
+    previousNodeTotal = totalNumNodes - 1;//Updates position where the previous end of the Linked List used to be ["-1" because the elements are added where the "TAIL" used to be and the "TAIL" is automatically reassigned to the end of the Linked List]
     printf("How many nodes would you like added to the Linked List? \n");
     scanf("%d", &changeNodeNum);
     totalNumNodes+=changeNodeNum; //Updates the counter for the total number of nodes currently in the Linked List
@@ -59,7 +63,6 @@ int main() {
 
     ptr[0]=HEAD;
     ptr[totalNumNodes-1] = TAIL;
-
 
     //Following code assigns the node values the user wants to be added to the Linked List
     //STACK and QUEUE PUSH:
@@ -70,12 +73,15 @@ int main() {
 
         } while (userInput_int == 0);
 
-        ptr[i+previousNodeTotal] = createNewNode(userInput_int, &ptr[i+previousNodeTotal+1]); //Creates a new node with the value the user has specified and then assigns the following node to be the one that the current node points to
+        ptr[i+previousNodeTotal-1] = createNewNode(userInput_int, &ptr[i+previousNodeTotal]); //Creates a new node with the value the user has specified and then assigns the following node to be the one that the current node points to
     }
-    HEAD.nextNode = &ptr[1];
+    HEAD.nextNode = &ptr[1]; //(&TAIL)
     //--------
 
-    //NEED TO IMPLEMENT REMOVE FUNCTIONS FOR BOTH STACK AND QUEUE
+    printf("Memory Address held by Node after Head Node: %p\n",HEAD.nextNode); //TEMPORARY
+    printf("Value held by Node after Head Node: %d\n",HEAD.nextNode->value); //TEMPORARY
+
+    //NEED TO IMPLEMENT REMOVE FUNCTIONS FOR BOTH STACK AND QUEUE IN .h AND .c FILES
 ///*
     //--------
     //Below will need to be implemented as a function in "linked_list.c" and later modified for when the Stack and Queue "structures" are added because the placement of where the nodes need to be will change depending on which "structure" is being used
@@ -84,25 +90,33 @@ int main() {
     previousNodeTotal = totalNumNodes - 1;//Updates previous Linked List node count ["-1" because the elements are added where the "TAIL" used to be and the "TAIL" is automatically reassigned to the end of the Linked List]
     printf("How many nodes would you like to be removed from the Linked List? \n");
     scanf("%d", &changeNodeNum);
-    totalNumNodes-=(changeNodeNum-1); //Updates the counter for the total number of nodes currently in the Linked List
+    totalNumNodes-=(changeNodeNum/*-1*/); //Updates the counter for the total number of nodes currently in the Linked List
 
     ///*
     //---
-    //WORKS: STACK Exclusive [Above lines + the ones between "//---" right here + ones after "QUEUE Exclusive" execute a perfect STACK removal of elements]:
-    ptr = realloc(ptr, (totalNumNodes * sizeof(struct listNode)));//Allocates the number of required nodes the user wishes to add to the Linked List
+    //SEEMS TO WORK: STACK Exclusive [Above lines + the ones between "//---" right here + ones after "QUEUE Exclusive" execute a perfect STACK removal of elements]:
+    //ptr = realloc(ptr, (totalNumNodes * sizeof(struct listNode)));//Allocates the number of required nodes the user wishes to add to the Linked List
     //---
     // */
 
-    /*
+    // /*
     //---
     //INCOMPLETE/NOT WORKING: QUEUE Exclusive [Above lines - "STACK EXCLUSIVE" + the ones between "//---" right here + ones after this execute a perfect QUEUE removal of elements]:
-    for (int i = 1; i < (totalNumNodes - changeNodeNum - 1); i++){
-        ptr[i].value = ptr[i+changeNodeNum].value;
-        ptr[i].nextNode = ptr[i+changeNodeNum].nextNode;
+
+    //Resets the values of each node of the Linked List so that however many nodes the user wants deleted from the front of the QUEUE Linked List will be deleted from the front and replaced by any remaining nodes in the Linked List
+    for (int i = 1; i<totalNumNodes; i++){
+        ptr[i] = ptr[i+(changeNodeNum)];
     }
+
     ptr = realloc(ptr, (totalNumNodes * sizeof(struct listNode)));//Allocates the number of required nodes the user wishes to add to the Linked List
+
+    HEAD.nextNode = &ptr[changeNodeNum]; //Resets HEAD Node so that it now looks at the new next Node in the Linked List
+
+    printf("Memory Address held by Node after Head Node: %p\n",HEAD.nextNode); //TEMPORARY
+    printf("Value held by Node after Head Node: %d\n",HEAD.nextNode->value); //TEMPORARY
+
     //---
-     */
+    // */
 
     ptr[0]=HEAD;
     ptr[totalNumNodes-1] = TAIL;
@@ -139,6 +153,14 @@ int main() {
     }
     printf("\n");
     //--------
+
+    //printf("Number of Nodes in Linked List: %d", totalNumNodes); //TEMPORARY
+
+    for (int i = 0; i<totalNumNodes; i++){ //TEMPORARY
+        printf("Node %d = %d, %p\n", i, ptr[i].value, &ptr[i]);
+    }
+
+    //test(&HEAD); //TEMPORARY, DOESN'T WORK
 
     //-----------
     //Test
