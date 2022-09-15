@@ -9,3 +9,7 @@
 #define C_PROJECT_STACK_H
 
 #endif //C_PROJECT_STACK_H
+
+void stackPush(int changeNodeNum, int * nodeCount, int userInput_int/*, struct listNode * ptr, struct listNode * nodeElem*/);
+
+//void stackPop();

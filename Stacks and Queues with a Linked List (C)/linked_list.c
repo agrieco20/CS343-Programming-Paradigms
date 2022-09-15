@@ -6,6 +6,8 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
+
 #include "linked_list.h"
 
 struct listNode createNewNode(int value, struct listNode *nextNode){
@@ -14,11 +16,38 @@ struct listNode createNewNode(int value, struct listNode *nextNode){
     newNode.nextNode = nextNode;
     return newNode;
 }
-//Display all elements in list function [only the values]
-//void displayNodes(){
-//  printf("The following nodes are currently in the Linked List: \n");
-//  for ()
-//}
+
+void displayNodes(struct listNode * nodeElem, struct listNode * ptr, int nodeCount){
+
+//    printf("%d", nodeElem->nextNode->value); //TEMPORARY
+
+    ptr = nodeElem->nextNode;
+    printf("Current Linked List: [");
+    while (ptr->nextNode/*->nextNode*/ != NULL){
+        printf("%d", ptr->value);
+        ptr=ptr->nextNode;
+
+        nodeCount--;
+        if (nodeCount > 0){
+            printf(", ");
+        }
+    }
+    printf("]\n");
+}
+
+//STACK and QUEUE Decrementor: [Pops Nodes from the "beginning" of the Linked List {at the HEAD}]
+void linkedList_Decrementor(struct listNode * nodeElem/*, struct listNode * nextNode*/){
+
+//    printf("%d", nodeElem->nextNode->value); //TEMPORARY
+
+    struct listNode * temp_ptr;
+    temp_ptr = nodeElem->nextNode;
+    nodeElem->nextNode = nodeElem->nextNode->nextNode;
+
+//    printf("%d", nodeElem->nextNode->value); //TEMPORARY
+
+    free(temp_ptr);
+}
 
 //void pushList(){
 //}

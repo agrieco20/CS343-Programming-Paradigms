@@ -17,11 +17,10 @@ struct listNode{
 
 struct listNode createNewNode(int value, struct listNode *nextNode); //Creates a new node which will be added to the Linked List in a manner dependent upon whether the user is currently adding elements to the Linked List with a Stack or a Queue
 
-//void displayNodes();
+void displayNodes(struct listNode * nodeElem, struct listNode * ptr, int nodeCount); //Prints out all the node values currently being held by the Linked List
 
-//void displayStackNodes();
-//void displayQueueNodes();
 
+void linkedList_Decrementor(struct listNode * nodeElem/*, struct listNode * nextNode*/);
 //Display all elements in list function [only the values]
 
 //void pushList();

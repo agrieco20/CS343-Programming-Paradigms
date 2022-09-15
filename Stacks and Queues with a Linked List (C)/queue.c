@@ -5,4 +5,94 @@
  * File Description: Responsible for creating the necessary Queue structure needed to increment the Linked List as if it was a Queue
  */
 
+#include <stdio.h>
+#include <stdlib.h>
+
 #include "queue.h"
+
+#include "linked_list.h"
+
+struct listNode * linkedList_QueueIncrementor(struct listNode * nodeElem/*, struct listNode * nextNode*/){
+    if (nodeElem->nextNode->nextNode == NULL) {
+        return nodeElem->nextNode;
+    }
+    else{
+        linkedList_QueueIncrementor(nodeElem->nextNode/*, */);
+    }
+}
+
+void queuePush(int changeNodeNum, int * nodeCount, int userInput_int, struct listNode * ptr, struct listNode * nodeElem){
+    changeNodeNum = 0; //Reset
+    do {
+        if(changeNodeNum < 0){
+            printf("You have entered a negative number. Please try again.\n");
+            changeNodeNum = 0; //Reset
+        }
+        printf("How many nodes would you like added to the Linked List as if it were a QUEUE? \n");
+        scanf("%d", &changeNodeNum);
+        *nodeCount += changeNodeNum;
+
+//        printf("Node Count: %d\n", *nodeCount); //TEMPORARY
+
+    } while(changeNodeNum < 0);
+
+    //Following code assigns the node values the user wants to be added to the Linked List as a QUEUE
+    struct listNode * newNode; //Acts as a placeholder node so that the new information the user wants entered as its own node in the Linked List can be added
+    struct listNode tempNode; //Acts as an initializer for temporarily holding the new node created using the "createNewNodes()" function (the numeric value [as sent by the user] and the next address [the TAIL of the Linked List] are then sent to the "newNode" listNode structure so that the previous node can be updated with the current node's address)
+    ptr = nodeElem; //Initializes the start of the Linked List [at "HEAD"]
+
+    for(int i=0; i<changeNodeNum; i++){
+        printf("Enter an integer to be added to the Linked List as if it were a QUEUE: \n");
+        scanf("%d", &userInput_int);
+
+        newNode = (struct listNode *) malloc((sizeof(struct listNode)));
+        tempNode = createNewNode(userInput_int, linkedList_QueueIncrementor(ptr)); //Creates a new node with the value the user has specified
+        newNode->value = tempNode.value;
+        newNode->nextNode = tempNode.nextNode;
+//        printf("New Node Value: %d\n", newNode->value); //Temporary
+//        printf("New Node Address: %p\n", newNode->nextNode); //Temporary
+        ptr->nextNode = newNode; //Resets the address being held by the previous node from TAIL to the newest node that's just been built to house the data the user is requesting in the Linked List
+        ptr = newNode; //The pointer looks at the newest node [newNode] so that the next piece of data can be placed/added after it in the QUEUE version of the Linked List
+    }
+
+    displayNodes(nodeElem, ptr, *nodeCount); //Prints out all the node values currently being held by the Linked List
+
+//    printf("ChangeNodeNum: %d\n", changeNodeNum); //TEMPORARY
+//    printf("Node Count: %d\n", *nodeCount); //TEMPORARY
+    //return nodeCount;
+}
+
+void queuePop(int changeNodeNum, int * nodeCount, struct listNode * ptr, struct listNode * nodeElem){
+//    int test = 0; //Reset, TEMPORARY name
+    changeNodeNum = 0; //Reset
+    do {
+        if (changeNodeNum > *nodeCount || changeNodeNum < 0){
+            printf("You have entered a value that either exceeds the number of nodes currently in the Linked List or is a negative value.\nPlease try again.\n");
+            changeNodeNum = 0; //Reset
+        }
+//        printf("ChangeNodeNum: %d\n", changeNodeNum); //TEMPORARY
+//        printf("Node Count: %d\n", *nodeCount); //TEMPORARY
+
+        printf("How many nodes would you like removed from the Linked List as if it were a QUEUE? \n");
+        scanf("%d", &changeNodeNum);
+    } while (changeNodeNum > *nodeCount || changeNodeNum < 0);
+
+    *nodeCount -= changeNodeNum;
+//    test = changeNodeNum;
+
+//    printf("ChangeNodeNum: %d\n", changeNodeNum); //TEMPORARY
+//    printf("Node Count: %d\n", *nodeCount); //TEMPORARY
+//    printf("Test: %d\n", test); //TEMPORARY
+
+    for(int i=0;i<changeNodeNum;i++) {
+//        printf("%d", *nodeCount); //TEMPORARY
+        linkedList_Decrementor(nodeElem);
+    }
+
+//    printf("success, %d", *nodeCount); //TEMPORARY
+
+    displayNodes(nodeElem, ptr, *nodeCount); //Prints out all the node values currently being held by the Linked List
+
+//    printf("%d", *nodeCount); //TEMPORARY
+//    return nodeCount;
+}
