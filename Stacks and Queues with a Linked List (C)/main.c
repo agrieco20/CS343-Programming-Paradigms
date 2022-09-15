@@ -103,8 +103,14 @@ int main() {
 
     //-------
 
-    //printf("Thank you for using this Linked List simulator written in C!\nTo start, please type the number corresponding to the action you would like taken:\n");
-    //printf("1. PUSH Nodes onto the Linked List as if it were a STACK\n2. POP Nodes from the Linked List as if it were a STACK\n3. PUSH Nodes onto the Linked List as if it were a QUEUE\n4. POP Nodes from the Linked List as if it were a QUEUE\n5. Display the current Linked List\n");
+    printf("Thank you for using this Linked List simulator written in C!\nTo start, please type the number corresponding to the action you would like taken:\n");
+    printf("1. PUSH Nodes onto the Linked List as if it were a STACK\n2. POP Nodes from the Linked List as if it were a STACK\n3. PUSH Nodes onto the Linked List as if it were a QUEUE\n4. POP Nodes from the Linked List as if it were a QUEUE\n5. Display the current Linked List\n6. Exit\n");
+//    do{
+//        scanf("%d", userInput_int);
+//        if (userInput_int <= 0 || userInput_int > 6){
+//            printf("You have entered an invalid entry. Please try again.\n");
+//        }
+//    } while (userInput_int <=0 || userInput_int >6);
 
     //--------
     //QUEUE PUSH:
@@ -197,7 +203,6 @@ int main() {
 
     //--------
     //STACK POP:
-
     changeNodeNum = 0; //Reset
     do {
         if (changeNodeNum > nodeCount || changeNodeNum < 0){
