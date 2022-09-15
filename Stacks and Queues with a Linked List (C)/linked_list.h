@@ -1,8 +1,8 @@
 /**
  * @author: Anthony Grieco
- * Date: 9/3/2022
+ * Date: 9/14/2022
  *
- * File Description: Provides all the required data declaration and function header information of the Linked Layer structure to "main.c", "stack.h", and "queue.h"
+ * File Description: Provides all the required data declaration and function header information of the Linked List structure to "main.c", "stack.h", and "queue.h"
  */
 
 #ifndef C_PROJECT_LINKED_LIST_H
