@@ -95,37 +95,59 @@ int main() {
 //    int previousNodeTotal = 0; //Continually keeps a count on where the previous end of the Linked List used to be (so that it will be easier to continue adding elements where the Linked List last left off)
 
     int changeNodeNum = 0; //User Input to add/remove a number of nodes from the Linked List
-    int userInput_int = 0; //User Input to indicate what value they want to be stored in the given node
+    int userInput_int = 1; //User Input to indicate what value they want to be stored in the given node
     int nodeCount = 0; //For data verification purposes; determines whether the value the user wishes to decrease the Linked List by [for both Stack and Queue] will exceed the total number of nodes currently in the list
 
     struct listNode *ptr = NULL; //Pointer used to iterate through the Linked List
 
     //-------
+    printf("Thank you for using this Linked List Simulator written in C!\nTo start, please type the number corresponding to the action you wish for the Simulator to execute.\n");
+//    printf("1. PUSH Nodes onto the Linked List as if it were a STACK\n2. POP Nodes from the Linked List as if it were a STACK\n3. PUSH Nodes onto the Linked List as if it were a QUEUE\n4. POP Nodes from the Linked List as if it were a QUEUE\n5. Display the current Linked List\n6. Exit\n");
+    do {
+        do {
+            //scanf("%d", userInput_int);
+            if (userInput_int <= 0 || userInput_int > 6) {
+                printf("\nYou have entered an invalid entry. Please try again.\n");
+            }
 
-    printf("Thank you for using this Linked List simulator written in C!\nTo start, please type the number corresponding to the action you would like taken:\n");
-    printf("1. PUSH Nodes onto the Linked List as if it were a STACK\n2. POP Nodes from the Linked List as if it were a STACK\n3. PUSH Nodes onto the Linked List as if it were a QUEUE\n4. POP Nodes from the Linked List as if it were a QUEUE\n5. Display the current Linked List\n6. Exit\n");
-//    do{
-//        scanf("%d", userInput_int);
-//        if (userInput_int <= 0 || userInput_int > 6){
-//            printf("You have entered an invalid entry. Please try again.\nYour Options are:");
-//        }
-//    } while (userInput_int <=0 || userInput_int >6);
+            printf("Options:\n1. PUSH Nodes onto the Linked List as if it were a QUEUE\n2. POP Nodes from the Linked List as if it were a QUEUE\n3. PUSH Nodes onto the Linked List as if it were a STACK\n4. POP Nodes from the Linked List as if it were a STACK\n5. Display the current Linked List\n6. Exit\nOption Choice: ");
+            scanf("%d", &userInput_int);
 
-    //--------
-    //QUEUE PUSH:
-    queuePush(changeNodeNum, &nodeCount, userInput_int, ptr, &HEAD);
+        } while (userInput_int <= 0 || userInput_int > 6);
+        printf("\n");
 
-    //--------
-    //QUEUE POP:
-    queuePop(changeNodeNum, &nodeCount, ptr, &HEAD);
+        //--------
+        //QUEUE PUSH:
+        if (userInput_int == 1) {
+            queuePush(changeNodeNum, &nodeCount, userInput_int, ptr, &HEAD);
+        }
 
-    //--------
-    //STACK PUSH:
-    stackPush(changeNodeNum, &nodeCount, userInput_int, ptr, &HEAD);
+            //--------
+            //QUEUE POP:
+        else if (userInput_int == 2) {
+            queuePop(changeNodeNum, &nodeCount, ptr, &HEAD);
+        }
 
-    //--------
-    //STACK POP:
-    stackPop(changeNodeNum, &nodeCount, ptr, &HEAD);
+            //--------
+            //STACK PUSH:
+        else if (userInput_int == 3) {
+            stackPush(changeNodeNum, &nodeCount, userInput_int, ptr, &HEAD);
+        }
+
+            //--------
+            //STACK POP:
+        else if (userInput_int == 4) {
+            stackPop(changeNodeNum, &nodeCount, ptr, &HEAD);
+        }
+
+            //--------
+            //Display Current Linked List::
+        else if (userInput_int == 5) {
+            displayNodes(&HEAD, ptr, nodeCount);
+        }
+    } while (userInput_int != 6);
+
+    printf("Thank you for using this Linked List Simulator! Please enjoy the rest of your day!");
 
     return 0;
 }
