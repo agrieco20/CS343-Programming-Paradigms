@@ -15,7 +15,8 @@
 //struct listNode * nodeElem;
 //struct listNode * ptr;
 
-void stackPush(int changeNodeNum, int * nodeCount, int userInput_int, struct listNode * ptr, struct listNode * nodeElem) {
+struct listNode * stackPush(int changeNodeNum, int * nodeCount, int userInput_int, struct listNode * ptr, struct listNode * nodeElem, struct listNode * startOfQueuePlacementHolder) {
+    int boolean = 0; //Reset
     changeNodeNum = 0; //Reset
     do {
         if(changeNodeNum < 0){
@@ -40,11 +41,19 @@ void stackPush(int changeNodeNum, int * nodeCount, int userInput_int, struct lis
         newNode->value = tempNode.value;
         newNode->nextNode = tempNode.nextNode;
         nodeElem->nextNode = newNode; //Reassigns the "next" address being pointed towards the new node [newNode] just created to house the user's requested data for the Linked List back to the original node
+
+        //The following code is used to ensure that if the user ever pushes nodes with a QUEUE, they will always be able to find the start of the QUEUE
+        if (*nodeCount - changeNodeNum == 0 && boolean==0){
+            printf("nodeCount = 0\n");
+            boolean++; //Locks down this conditional statement so only the first address of the Stack will be returned [which is where the next node would start if it were implemented with a QUEUE]
+            startOfQueuePlacementHolder = nodeElem->nextNode;
+        }
 //        printf("New Node Value: %d\n", newNode->value); //Temporary
 //        printf("New Node Address: %p\n", newNode->nextNode); //Temporary
     }
 
     displayNodes(nodeElem, ptr, *nodeCount); //Prints out all the node values currently being held by the Linked List
+    return startOfQueuePlacementHolder;
 }
 
 void stackPop(int changeNodeNum, int * nodeCount, struct listNode * ptr, struct listNode * nodeElem){

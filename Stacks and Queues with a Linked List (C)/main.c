@@ -100,7 +100,7 @@ int main() {
 
     struct listNode *ptr = NULL; //Pointer used to iterate through the Linked List
 
-    struct listNode * queuePlacementHolder = &HEAD;
+    struct listNode * startOfQueuePlacementHolder = &HEAD;
 
     //-------
     printf("HEAD Memory Address: %p\n", &HEAD);
@@ -125,7 +125,7 @@ int main() {
         //--------
         //QUEUE PUSH:
         if (userInput_int == 1) {
-            queuePlacementHolder = queuePush(changeNodeNum, &nodeCount, userInput_int, ptr, queuePlacementHolder, &HEAD);
+            startOfQueuePlacementHolder = queuePush(changeNodeNum, &nodeCount, userInput_int, ptr, startOfQueuePlacementHolder, &HEAD);
         }
 
             //--------
@@ -137,7 +137,7 @@ int main() {
             //--------
             //STACK PUSH:
         else if (userInput_int == 3) {
-            stackPush(changeNodeNum, &nodeCount, userInput_int, ptr, &HEAD);
+            startOfQueuePlacementHolder = stackPush(changeNodeNum, &nodeCount, userInput_int, ptr, &HEAD, startOfQueuePlacementHolder);
         }
 
             //--------
