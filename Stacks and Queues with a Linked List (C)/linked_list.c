@@ -18,9 +18,6 @@ struct listNode createNewNode(int value, struct listNode *nextNode){
 }
 
 void displayNodes(struct listNode * nodeElem, struct listNode * ptr, int nodeCount){
-
-//    printf("%d", nodeElem->nextNode->value); //TEMPORARY
-
     ptr = nodeElem->nextNode;
     printf("Current Linked List: [");
     while (ptr->nextNode/*->nextNode*/ != NULL){
@@ -37,26 +34,9 @@ void displayNodes(struct listNode * nodeElem, struct listNode * ptr, int nodeCou
 
 //STACK and QUEUE Decrementor: [Pops Nodes from the "beginning" of the Linked List {at the HEAD}]
 void linkedList_Decrementor(struct listNode * nodeElem/*, struct listNode * nextNode*/){
-
-//    printf("%d", nodeElem->nextNode->value); //TEMPORARY
-
     struct listNode * temp_ptr;
     temp_ptr = nodeElem->nextNode;
     nodeElem->nextNode = nodeElem->nextNode->nextNode;
 
-//    printf("%d", nodeElem->nextNode->value); //TEMPORARY
-
     free(temp_ptr);
 }
-
-//void pushList(){
-//}
-
-/*
-void test(struct listNode *test1){ //TEMPORARY, DOESN'T WORK
-    printf("%d",test1->value);
-    if (test1->nextNode != NULL) {
-        test(test1->nextNode);
-    }
-}
- */

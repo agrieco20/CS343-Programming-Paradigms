@@ -10,7 +10,6 @@
 
 #endif //C_PROJECT_QUEUE_H
 
-
 //Below function is necessary so that the rest of the Queue functions understand how a "struct listNode" is built and the potential data it can hold
 //QUEUE Incrementor (Responsible for adding all new QUEUE nodes to the very end of the Linked List [just before the TAIL node])
 struct listNode * linkedList_QueueIncrementor(struct listNode * nodeElem/*, struct listNode * nextNode*/);

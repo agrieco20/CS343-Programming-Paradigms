@@ -19,10 +19,4 @@ struct listNode createNewNode(int value, struct listNode *nextNode); //Creates a
 
 void displayNodes(struct listNode * nodeElem, struct listNode * ptr, int nodeCount); //Prints out all the node values currently being held by the Linked List
 
-
-void linkedList_Decrementor(struct listNode * nodeElem/*, struct listNode * nextNode*/);
-//Display all elements in list function [only the values]
-
-//void pushList();
-
-//void test(struct listNode *test1); //TEMPORARY, DOESN'T WORK
+void linkedList_Decrementor(struct listNode * nodeElem);

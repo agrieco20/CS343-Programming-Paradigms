@@ -12,11 +12,8 @@
 
 #include "linked_list.h"
 
-//struct listNode * nodeElem;
-//struct listNode * ptr;
-
 struct listNode * stackPush(int changeNodeNum, int * nodeCount, int userInput_int, struct listNode * ptr, struct listNode * nodeElem, struct listNode * startOfQueuePlacementHolder) {
-    int boolean = 0; //Reset
+    int boolean = 0; //Reset, ensures only the first address sent into STACK when there are no other nodes in the Linked List is sent to "startOfQueuePlacementHolder" so that adding nodes to the QUEUE will be both easier and possible
     changeNodeNum = 0; //Reset
     do {
         if(changeNodeNum < 0){
@@ -30,7 +27,7 @@ struct listNode * stackPush(int changeNodeNum, int * nodeCount, int userInput_in
 
     //Following code assigns the node values the user wants to be added to the Linked List as a STACK
     struct listNode * newNode; //Acts as a placeholder node so that the new information the user wants entered as its own node in the Linked List can be added
-    struct listNode tempNode; //Acts as an initializer for temporarily holding the new node created using the "createNewNodes()" function (the numeric value [as sent by the user] and the next address [the TAIL of the Linked List] are then sent to the "newNode" listNode structure so that the previous node can be updated with the current node's address)
+    struct listNode tempNode; //Acts as an initializer to temporarily hold the new node created using the "createNewNodes()" function (the numeric value [as sent by the user] and the next address [the TAIL of the Linked List] are then sent to the "newNode" listNode structure so that the previous node can be updated with the current node's address)
 
     for(int i=0; i<changeNodeNum; i++){
         printf("Enter an integer to be added to the Linked List as if it were a STACK: \n");
@@ -44,12 +41,9 @@ struct listNode * stackPush(int changeNodeNum, int * nodeCount, int userInput_in
 
         //The following code is used to ensure that if the user ever pushes nodes with a QUEUE, they will always be able to find the start of the QUEUE
         if (*nodeCount - changeNodeNum == 0 && boolean==0){
-            printf("nodeCount = 0\n");
             boolean++; //Locks down this conditional statement so only the first address of the Stack will be returned [which is where the next node would start if it were implemented with a QUEUE]
             startOfQueuePlacementHolder = nodeElem->nextNode;
         }
-//        printf("New Node Value: %d\n", newNode->value); //Temporary
-//        printf("New Node Address: %p\n", newNode->nextNode); //Temporary
     }
 
     displayNodes(nodeElem, ptr, *nodeCount); //Prints out all the node values currently being held by the Linked List
