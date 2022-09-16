@@ -39,7 +39,7 @@ void stackPush(int changeNodeNum, int * nodeCount, int userInput_int, struct lis
         tempNode = createNewNode(userInput_int, nodeElem->nextNode); //Creates a new node with the value the user has specified
         newNode->value = tempNode.value;
         newNode->nextNode = tempNode.nextNode;
-        nodeElem->nextNode = newNode; //Reassigns the "next" address being pointed to at the new node [newNode] just created to house the user's requested data for the Linked List
+        nodeElem->nextNode = newNode; //Reassigns the "next" address being pointed towards the new node [newNode] just created to house the user's requested data for the Linked List back to the original node
 //        printf("New Node Value: %d\n", newNode->value); //Temporary
 //        printf("New Node Address: %p\n", newNode->nextNode); //Temporary
     }

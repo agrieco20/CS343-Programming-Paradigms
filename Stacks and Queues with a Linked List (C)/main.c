@@ -100,7 +100,13 @@ int main() {
 
     struct listNode *ptr = NULL; //Pointer used to iterate through the Linked List
 
+    struct listNode * queuePlacementHolder = &HEAD;
+
     //-------
+    printf("HEAD Memory Address: %p\n", &HEAD);
+    printf("TAIL Memory Address: %p\n", &TAIL);
+
+
     printf("Thank you for using this Linked List Simulator written in C!\nTo start, please type the number corresponding to the action you wish for the Simulator to execute.\n");
 //    printf("1. PUSH Nodes onto the Linked List as if it were a STACK\n2. POP Nodes from the Linked List as if it were a STACK\n3. PUSH Nodes onto the Linked List as if it were a QUEUE\n4. POP Nodes from the Linked List as if it were a QUEUE\n5. Display the current Linked List\n6. Exit\n");
     do {
@@ -119,7 +125,7 @@ int main() {
         //--------
         //QUEUE PUSH:
         if (userInput_int == 1) {
-            queuePush(changeNodeNum, &nodeCount, userInput_int, ptr, &HEAD);
+            queuePlacementHolder = queuePush(changeNodeNum, &nodeCount, userInput_int, ptr, queuePlacementHolder, &HEAD);
         }
 
             //--------
@@ -147,6 +153,7 @@ int main() {
         }
     } while (userInput_int != 6);
 
+    free(ptr);
     printf("Thank you for using this Linked List Simulator! Please enjoy the rest of your day!");
 
     return 0;

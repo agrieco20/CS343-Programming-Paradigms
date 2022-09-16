@@ -16,7 +16,7 @@
 struct listNode * linkedList_QueueIncrementor(struct listNode * nodeElem/*, struct listNode * nextNode*/);
 
 //Responsible for adding nodes to the Linked List as if it were a QUEUE
-void queuePush(int changeNodeNum, int * nodeCount, int userInput_int, struct listNode * ptr, struct listNode * nodeElem);
+struct listNode * queuePush(int changeNodeNum, int * nodeCount, int userInput_int, struct listNode * ptr, struct listNode * nodeElem, struct listNode * displayNodesStartingValue);
 
 //Responsible for removing nodes from the Linked List as if it were a QUEUE
 void queuePop(int changeNodeNum, int * nodeCount, struct listNode * ptr, struct listNode * nodeElem);
