@@ -7,7 +7,7 @@ Date: 9/28/2022
 Description: This program takes decimal numbers (in this case 0-255 for demonstration purposes) and converts them into Binary Array Format. For example, "5" is returned as [0,0,0,0,0,1,0,1]
 =end #comment
 
-#This function "returns" the Binary representation of a decimal number in an array format
+#This function returns the Binary representation of a decimal number in an array format
 def binaryArrayFormatter(currentNum)
 
   arrayLengthDeterminer = currentNum #Stored in arrayLengthDeterminer
@@ -26,13 +26,13 @@ def binaryArrayFormatter(currentNum)
   binaryArray = Array.new(arrayLengthCounter)
   binaryArrayLengthCounter = binaryArray.length - 1
 
-  #Calculates what the Binary Value of a number should be, assigns the value in reverse order to "binaryArray" and then "returns" it in the following line back to the main program
+  #Calculates what the Binary Value of a number should be, assigns the value in reverse order to "binaryArray" and then returns it in the following line back to the main program
   while binaryArrayLengthCounter >= 0
     binaryArray[binaryArrayLengthCounter] = currentNum % 2
     currentNum /= 2
     binaryArrayLengthCounter -= 1
   end
-  binaryArray #Because this is the last line of the function, this is the item that the function "returns" when it is called
+  return binaryArray
 end
 
 if __FILE__ == $0
