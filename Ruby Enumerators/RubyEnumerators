@@ -1,8 +1,10 @@
 =begin #comment
 Name: Anthony Grieco
+Class: CS343 Programming Paradigms
+Language: Ruby
 Date: 9/28/2022
 
-Description: This program converts numbers 0-255 and converts them into Binary Array Format. For example, "5" is returned as [0,0,0,0,0,1,0,1]
+Description: This program takes decimal numbers (in this case 0-255 for demonstration purposes) and converts them into Binary Array Format. For example, "5" is returned as [0,0,0,0,0,1,0,1]
 =end #comment
 
 #This function "returns" the Binary representation of a decimal number in an array format
