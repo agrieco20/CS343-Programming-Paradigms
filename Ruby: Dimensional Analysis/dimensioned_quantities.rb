@@ -8,8 +8,8 @@ Description: This sub-class performs the necessary calculations to complete the 
 require_relative 'Dimensions'
 
 class Dimensioned_Quantities
-  private attr_accessor :dimensionedQuantity, :newQuantityDimension, :dimensionTimeExp, :dimensionDistanceExp, :dimensionMassExp
-
+  private attr_accessor :dimensionedQuantity,  :dimensionTimeExp, :dimensionDistanceExp, :dimensionMassExp
+  attr_accessor :newQuantityDimension #Allows for the creation of a "Dimensions" class within the "Dimensioned_quantities" class; Not "private" so that the private variables/methods of the new "Dimensions" object can now be accessed
   # def initialize(dimensionedQuantity, dimensionTime, dimensionDistance, dimensionMass)
   #   @dimensionedQuantity = dimensionedQuantity #Accepts Value
   #   @dimensionTime = dimensionTime #Accepts Time Dimension
@@ -26,6 +26,21 @@ class Dimensioned_Quantities
   def dimensionedQuantity_Getter
     return @dimensionedQuantity
   end
+
+  # #Time (s) Exp Variable
+  # def dimensionTimeExp_Getter
+  #   return dimensionTimeExp
+  # end
+  #
+  # #Distance (m) Exp Variable
+  # def dimensionDistanceExp_Getter
+  #   return dimensionDistanceExp
+  # end
+  #
+  # #Mass (kg) Exp Variable
+  # def dimensionMassExp_Getter
+  #   return dimensionMassExp
+  # end
 
   #Doesn't need repeat the same classes as Dimensions (the "to_s" function being the only exception)
   # def initialize(*arrayOfItems)#Should probably treat it as though I will pass in an array of dimensioned quantities
@@ -54,8 +69,8 @@ class Dimensioned_Quantities
   #Addition
   def +(quantity)
     # return @dimensionedQuantity
-    variable = @dimensionedQuantity + quantity.dimensionedQuantity_Getter
-    return variable
+    return @dimensionedQuantity + quantity.dimensionedQuantity_Getter
+    # return variable
 
     # @newQuantityDimension += quantity.newQuantityDimension
     # return @dimensionedQuantity + quantity.dimensionedQuantity, " test2"
@@ -63,18 +78,18 @@ class Dimensioned_Quantities
 
   #Subtraction
   def -(quantity)
-    return @dimensionedQuantity - quantity.dimensionedQuantity
+    return @dimensionedQuantity - quantity.dimensionedQuantity_Getter
   end
 
   #Multiplication
   def *(quantity)
-    return @dimensionedQuantity * quantity.dimensionedQuantity
+    return @dimensionedQuantity * quantity.dimensionedQuantity_Getter
     # @newQuantityDimension *= quantity.newQuantityDimension
   end
 
   #Division
   def /(quantity)
-    return @dimensionedQuantity / quantity.dimensionedQuantity
+    return @dimensionedQuantity / quantity.dimensionedQuantity_Getter
   end
 
   #Needs a "to_s function"

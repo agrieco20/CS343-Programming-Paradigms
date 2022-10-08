@@ -6,7 +6,7 @@ Description: This super-class defines what the legal "dimensions" are (Time ["s"
 =end #comment
 
 class Dimensions
-  attr_accessor :dimensionTimeExp, :dimensionDistanceExp, :dimensionMassExp
+  private attr_accessor :dimensionTimeExp, :dimensionDistanceExp, :dimensionMassExp
 
   #Constructor, Parameter designed to be treated as if it were an array that can accept as many values as the user wants to be calculated at a time
   def initialize(dimensionTimeExp, dimensionDistanceExp, dimensionMassExp)
@@ -18,8 +18,19 @@ class Dimensions
   end
 
   #Time (s) Exp Variable
+  def dimensionTimeExp_Getter
+    return @dimensionTimeExp
+  end
+
   #Distance (m) Exp Variable
+  def dimensionDistanceExp_Getter
+    return @dimensionDistanceExp
+  end
+
   #Mass (kg) Exp Variable
+  def dimensionMassExp_Getter
+    return @dimensionMassExp
+  end
 
   #Need overloads for all of the math operators for the above variables
   def +(dimension)
@@ -38,9 +49,9 @@ class Dimensions
 
   def *(dimension)
     #Adds like bases together
-    # @dimensionTimeExp += dimension.dimensionTimeExp
-    # @dimensionDistanceExp += dimension.dimensionDistanceExp
-    # @dimensionMassExp += dimension.dimensionMassExp
+    @dimensionTimeExp += dimension.dimensionTimeExp
+    @dimensionDistanceExp += dimension.dimensionDistanceExp
+    @dimensionMassExp += dimension.dimensionMassExp
   end
 
   def /(dimension)

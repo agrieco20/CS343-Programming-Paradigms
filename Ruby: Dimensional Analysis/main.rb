@@ -12,9 +12,9 @@ require_relative 'dimensioned_quantities'
 
 #main
 if __FILE__ == $0
-  test1 = Dimensioned_Quantities.new(1, 2, 2, 2)
+  test1 = Dimensioned_Quantities.new(1, 1, 2, 3)
   # print test.instance_variable_get(@dimensionedQuantity)
-  test2 = Dimensioned_Quantities.new(2, 2, 2, 2)
+  test2 = Dimensioned_Quantities.new(2, 1, 2, 3)
 
   # tempTest = test1 + test2 #Works
   # print tempTest
@@ -27,8 +27,31 @@ if __FILE__ == $0
   # test1.dimensionedQuantityGetter += 1
   # puts test1.dimensionedQuantityGetter
 
-  test3 = Dimensioned_Quantities.new(test1+test2,3, 3, 3)
+  #Multiplication Example
+  puts "\nMultiplication Example:"
+  test3 = Dimensioned_Quantities.new(test1 * test2, test1.newQuantityDimension.dimensionTimeExp_Getter * test2.newQuantityDimension.dimensionTimeExp_Getter, test1.newQuantityDimension.dimensionDistanceExp_Getter * test2.newQuantityDimension.dimensionDistanceExp_Getter, test1.newQuantityDimension.dimensionMassExp_Getter * test2.newQuantityDimension.dimensionMassExp_Getter)
   puts test3
+
+  #Division Example
+  puts "\nDivision Example:"
+  test4 = Dimensioned_Quantities.new(test1 / test2, test1.newQuantityDimension.dimensionTimeExp_Getter / test2.newQuantityDimension.dimensionTimeExp_Getter, test1.newQuantityDimension.dimensionDistanceExp_Getter / test2.newQuantityDimension.dimensionDistanceExp_Getter, test1.newQuantityDimension.dimensionMassExp_Getter / test2.newQuantityDimension.dimensionMassExp_Getter)
+  puts test4
+
+  puts test1
+  puts test2
+
+  #Test
+  #-----
+  # puts test1.dimensionedQuantity_Getter
+  #
+  # puts test1.newQuantityDimension.dimensionTimeExp_Getter
+  # puts test1.newQuantityDimension.dimensionDistanceExp_Getter
+  # puts test1.newQuantityDimension.dimensionMassExp_Getter
+  #-----
+
+  # puts test1.dimensionTimeExp_Getter
+  # puts test1.dimensionDistanceExp_Getter
+  # puts test1.dimensionMassExp_Getter
 
   # #TEMPORARY
   # # -----
