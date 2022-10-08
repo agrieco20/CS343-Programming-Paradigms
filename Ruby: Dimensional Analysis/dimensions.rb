@@ -6,17 +6,51 @@ Description: This super-class defines what the legal "dimensions" are (Time ["s"
 =end #comment
 
 class Dimensions
+  attr_accessor :dimensionTimeExp, :dimensionDistanceExp, :dimensionMassExp
 
-  #Constructor, Designed to be treated as if it were an array that can accept as many values as the user wants to be calculated at a time
-  def initialize(*arrayOfItems)
-    @arrayOfItems = arrayOfItems
+  #Constructor, Parameter designed to be treated as if it were an array that can accept as many values as the user wants to be calculated at a time
+  def initialize(dimensionTimeExp, dimensionDistanceExp, dimensionMassExp)
+    @dimensionTimeExp = dimensionTimeExp #Accepts Time Dimension
+    @dimensionDistanceExp = dimensionDistanceExp #Accepts Distance Dimension
+    @dimensionMassExp = dimensionMassExp #Accepts Mass Dimension
+
+    #Variables Positive if found on top of equation, negative if found on bottom of equation, and 0 if not found at all in equation
   end
 
-  #TEMPORARY FUNCTION
-  def printTest
-    return @arrayOfItems[0]
+  #Time (s) Exp Variable
+  #Distance (m) Exp Variable
+  #Mass (kg) Exp Variable
+
+  #Need overloads for all of the math operators for the above variables
+  def +(dimension)
+    #Check to see if bases are the exact same, if same -> return bases of original object, if different -> throw ArgumentExceptionError and state that the given operation cannot be completed because the bases do not match
+
+    # dimensionTimeExp =
+    # if @dimensionTimeExp != dimension.dimensionTimeExp
+    # print "failure" #Test
+
+    # end
   end
-  #Needs an internal function to split each quantity from their respective unit [keeps unit in a new array of data]
-  #Needs function to check if the units ("s", "m", or "kg") at the end of the dimensioned quantity to see whether it and another given dimensioned quantity can be used in the same mathematical equation
-  #Needs a "to_s function"
+
+  def -(dimension)
+    #Check to see if bases are the exact same, if same -> return bases of original object, if different -> throw ArgumentExceptionError and state that the given operation cannot be completed because the bases do not match
+  end
+
+  def *(dimension)
+    #Adds like bases together
+    # @dimensionTimeExp += dimension.dimensionTimeExp
+    # @dimensionDistanceExp += dimension.dimensionDistanceExp
+    # @dimensionMassExp += dimension.dimensionMassExp
+  end
+
+  def /(dimension)
+    #Subtracts like bases from each other
+    @dimensionTimeExp -= dimension.dimensionTimeExp
+    @dimensionDistanceExp -= dimension.dimensionDistanceExp
+    @dimensionMassExp -= dimension.dimensionMassExp
+  end
+
+  def to_s
+    return "Dimensions: s = %d, m = %d, kg = %d" % [dimensionTimeExp, dimensionDistanceExp, dimensionMassExp]
+  end
 end
