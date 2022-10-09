@@ -27,6 +27,21 @@ class Dimensioned_Quantities
     return @dimensionedQuantity
   end
 
+  #Time (s) Exp Variable
+  def dimensionTimeExp_Getter
+    return @dimensionTimeExp
+  end
+
+  #Distance (m) Exp Variable
+  def dimensionDistanceExp_Getter
+    return @dimensionDistanceExp
+  end
+
+  #Mass (kg) Exp Variable
+  def dimensionMassExp_Getter
+    return @dimensionMassExp
+  end
+
   # #Time (s) Exp Variable
   # def dimensionTimeExp_Getter
   #   return dimensionTimeExp
@@ -67,9 +82,26 @@ class Dimensioned_Quantities
   #The following are overloaded math operators so the program is able perform dimensional analysis with the given value (the identifying units are covered in "dimension.rb")
 
   #Addition
+  # def +(quantity)
+  #   # return @dimensionedQuantity
+  #   return @dimensionedQuantity + quantity.dimensionedQuantity_Getter
+  #   # return variable
+  #
+  #   # @newQuantityDimension += quantity.newQuantityDimension
+  #   # return @dimensionedQuantity + quantity.dimensionedQuantity, " test2"
+  # end
   def +(quantity)
-    # return @dimensionedQuantity
-    return @dimensionedQuantity + quantity.dimensionedQuantity_Getter
+    # if quantity == Dimensioned_Quantities
+    #   return @dimensionedQuantity + quantity.dimensionedQuantity_Getter
+    #
+    # else
+    #   super(quantity)
+    #
+    # end
+
+
+    return @dimensionedQuantity + quantity.dimensionedQuantity_Getter #Original
+
     # return variable
 
     # @newQuantityDimension += quantity.newQuantityDimension
@@ -83,16 +115,40 @@ class Dimensioned_Quantities
 
   #Multiplication
   def *(quantity)
-    return @dimensionedQuantity * quantity.dimensionedQuantity_Getter
+    # @newQuantityDimension = Dimensions.new(@dimensionTimeExp, @dimensionDistanceExp, @dimensionMassExp)
+    # quantity
+
+    # return @newQuantityDimension.dimensionTimeExp_Getter * quantity.newQuantityDimension.dimensionTimeExp_Getter
+
+    # calculatedQuantity = @dimensionedQuantity * quantity.dimensionedQuantity_Getter
+    # calculatedTimeExp = @dimensionTimeExp * quantity.dimensionTimeExp_Getter
+    # calculatedDistanceExp
+    # calculatedMassExp
     # @newQuantityDimension *= quantity.newQuantityDimension
+
+    # puts "test", quantity.dimensionedQuantity_Getter #TEMPORARY
+    # puts "test", quantity.newQuantityDimension.dimensionTimeExp_Getter1 #TEMPORARY
+
+    firstDimensions = Dimensions.new(newQuantityDimension.dimensionTimeExp_Getter1, newQuantityDimension.dimensionDistanceExp_Getter1, newQuantityDimension.dimensionMassExp_Getter1)
+    secondDimensions = Dimensions.new(quantity.newQuantityDimension.dimensionTimeExp_Getter1, quantity.newQuantityDimension.dimensionDistanceExp_Getter1, quantity.newQuantityDimension.dimensionMassExp_Getter1)
+
+    # puts firstDimensions #TEMPORARY
+    # puts secondDimensions #TEMPORARY
+
+    dimensionsAnalysis = firstDimensions * secondDimensions
+
+    #Creates a new Dimensioned_Quantities object as the final result of Dimensional Analysis
+    return Dimensioned_Quantities.new(@dimensionedQuantity * quantity.dimensionedQuantity_Getter, dimensionsAnalysis.dimensionTimeExp_Getter1, dimensionsAnalysis.dimensionDistanceExp_Getter1, dimensionsAnalysis.dimensionMassExp_Getter1)
   end
 
   #Division
   def /(quantity)
+    #NEED TO COPY THE "*" FUNCTION AND MAKE MINOR MODIFICATIONS SO THAT DIVISION WILL BE COMPLETED INSTEAD OF MULTIPLICATION (SAME WITH THE "/" EQUIVALENT IN THE "Dimensions" CLASS)
+
     return @dimensionedQuantity / quantity.dimensionedQuantity_Getter
   end
 
-  #Needs a "to_s function"
+  #Allows any "Dimensional_Quantities" objects to print out all of their information to the console when called (new objects created as a result of Dimensional Analysis print out their information immediately by default)
   def to_s
     # puts "%.2f" % dimensionedQuantity
     # return "%d" % @dimensionedQuantity, "%d" % @dimensionTimeExp
