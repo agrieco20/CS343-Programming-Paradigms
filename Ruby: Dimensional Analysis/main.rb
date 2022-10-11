@@ -12,7 +12,7 @@ require_relative 'dimensions'
 
 #main
 if __FILE__ == $0
-  #Creates three Starter "Dimensional Analysis"" objects (the third object always has the same dimensions as the first object to further demonstrate that when adding and subtracting Dimensional Analysis objects they must contain the same bases)
+  #Creates three Starter "Dimensional Analysis" objects (the third object always has the same dimensions as the first object to further demonstrate that when adding and subtracting Dimensional Analysis objects they must contain the same bases)
   dimensionalObject1 = Dimensioned_Quantities.new(4, 0, 0, 2)
 
   dimensionalObject2 = Dimensioned_Quantities.new(1, -1, 1, 1)
