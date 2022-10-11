@@ -70,7 +70,7 @@ class Dimensioned_Quantities
     return Dimensioned_Quantities.new(Float(@dimensionedQuantity) / Float(quantity.dimensionedQuantity_Getter), dimensionsAnalysis.dimensionTimeExp_Getter, dimensionsAnalysis.dimensionDistanceExp_Getter, dimensionsAnalysis.dimensionMassExp_Getter)
   end
 
-  #When a "Dimensioned_Quantities" object is called, it Allows any "Dimensional_Quantities" objects to print out all of their information to the console when called (new objects created as a result of Dimensional Analysis print out their information immediately by default)
+  #When a "Dimensioned_Quantities" object is called, it allows any "Dimensional_Quantities" objects to print out all of their information to the console when called (new objects created as a result of Dimensional Analysis print out their information immediately by default)
   def to_s
     return "Dimensioned Quantity: %.2f\n%s" % [dimensionedQuantity, newQuantityDimension]
   end
