@@ -41,11 +41,17 @@
     )
 )
 
+; (defun Bubble-Sort-OuterLoop (currentIndex lst currentLoop)
+;     (if (< currentLoop (length lst))
+;         (Bubble-Sort-InnerLoop currentIndex lst)
+;         ; lst
+;     )
+; )
 
-; (defun Bubble-Sort (lst)
 (defun Bubble-Sort-OuterLoop (currentIndex lst currentLoop)
     (if (< currentLoop (length lst))
-        (Bubble-Sort-InnerLoop (currentIndex lst))
+        (Bubble-Sort-OuterLoop currentIndex (Bubble-Sort-InnerLoop currentIndex lst) (+ currentLoop 1))
+        lst
     )
 )
 
@@ -87,8 +93,8 @@
                 
                 ; (swap currentIndex lst)
                 ; (swap (Bubble-Sort(car lst)) lst)
-                (Bubble-Sort (+ currentIndex 1) (swap currentIndex lst))
-                (Bubble-Sort (+ currentIndex 1) lst)
+                (Bubble-Sort-InnerLoop (+ currentIndex 1) (swap currentIndex lst))
+                (Bubble-Sort-InnerLoop (+ currentIndex 1) lst)
                 ; (lst)
                 ; (append (list(car lst)) (Bubble-Sort (cdr lst)))
                 ; (Bubble-Sort currentIndex (cdr lst))
@@ -187,9 +193,10 @@
 
 ; Need to randomize the below sample lists
 
-(format t "List of Items being Organized by the Bubble Sort: (5 3 1 4 2) ~%")
+(format t "List of Items being Organized by the Bubble Sort: (3 5 1 4 2) ~%")
 ; (format t "Result of the Above List being Organized: ~d~%" (Bubble-Sort '(5 2 1 4 3)))
-(format t "Result of the Above List being Organized: ~d~%" (Bubble-Sort-InnerLoop 0 '(5 3 1 4 2) )); '0 ) (bubble_total-Iterations-Calculator '(5 3 1 4 2))))
+; (format t "Result of the Above List being Organized: ~d~%" (Bubble-Sort-InnerLoop 0 '(5 3 1 4 2) )); '0 ) (bubble_total-Iterations-Calculator '(5 3 1 4 2))))
+(format t "Result of the Above List being Organized: ~d~%" (Bubble-Sort-OuterLoop 0 '(3 5 1 4 2) 0)); '0 ) (bubble_total-Iterations-Calculator '(5 3 1 4 2))))
 
 ; (format t "Result of the Above List being Organized: ~d~%" (Bubble-Sort #'1+ '(2 5 1 4 3)))
 
