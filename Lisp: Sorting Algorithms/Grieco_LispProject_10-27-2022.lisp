@@ -19,7 +19,7 @@
     )
 )
 
-;Returns the list of elements that follow the two elements being swapped (in a Bubble Sort)
+;Returns the list of elements that follow the two elements being swapped (in a Bubble Sort) or any remaining elements in the [left] or [right] list depending on if one of them is completely empty before the other is (in a Merge Sort)
 (defun list-after-item (currentIndex lst)
     (if (= currentIndex 0)
         (cdr lst)
@@ -61,17 +61,67 @@
     )
 )
 
-; (defun Merge-Sort)
+;Repetitive recursive call for the Merge Sort Algorithm
+; (defun Merge-Sort (lst)
+;     ;To be implemented later
+; )
+
+;Implementation of the Merge Sort Algorithm (controls the "swapping" from the two separate lists passed to it)
+(defun MergeLoop (currentIndex-Left currentIndex-Right left right mergeLst)
+    
+    ;"If Statements" before the "While Loop" in "MERGE" -> Both Fail
+    ;Next 7 Lines don't work yet (but are needed)
+    ; (if (= (length left) 0)
+    ;     right
+    ; )
+    
+    ; (if (= (length right) 0)
+    ;     left
+    ; )
+
+    ;"If Statements" following the "While Loop" in "MERGE" -> Both Fail
+    ; (if (and (< currentIndex-Left (length left)) (= currentIndex-Right (- (length right) 1)))
+    ;     (append mergeLst (list(list-after-item currentIndex-Left left)))
+    ;     (format t "fail1 ") ;Temporary
+    ; )
+
+    ; (if (and (< currentIndex-Right (length right) ) (= currentIndex-Left (- (length left) 1)))
+    ;     (append mergeLst (list(list-after-item currentIndex-Right right)))
+    ;     (format t "fail2 ") ;Temporary
+    ; )
+
+    ;"While Loop"  in "MERGE" -> Works
+    (if (and (< currentIndex-Left (length left)) (< currentIndex-Right (length right)))
+        (if (< (retrieve-item currentIndex-Left left) (retrieve-item currentIndex-Right right))
+            (MergeLoop (+ currentIndex-Left 1) currentIndex-Right left right (append mergeLst (list(retrieve-item currentIndex-Left left))))
+            (MergeLoop currentIndex-Left (+ currentIndex-Right 1) left right (append mergeLst (list(retrieve-item currentIndex-Right right))))
+        )
+        mergeLst
+    )
+
+    ; (if (< currentIndex-Left (length left))
+    ;     (append mergeLst (list(list-after-item currentIndex-Left left)))
+    ; )
+
+    ; (if (< currentIndex-Right (length right))
+    ;     (append mergeLst (list(list-after-item currentIndex-Right right)))
+    ; )
+
+    ; mergeLst
+
+)
 
 ; Bonus:
 ; (defun Quick-Sort)
 
 (format t "List of Items being Organized by the Bubble Sort: (3 5 1 4 2) ~%")
-(format t "Result of the Above List being Organized: ~d~%" (Bubble-Sort-OuterLoop 0 '(3 5 1 4 2) 0))
+(format t "Result of the Above List being Organized with a Bubble Sort: ~d~%~%" (Bubble-Sort-OuterLoop 0 '(3 5 1 4 2) 0))
 
-; (format t "List of Items being Organized by the Merge Sort: (7 6 10 9 8) ~%")
-; (format t "Result of the Above List being Organized: ~d~%" (Merge-Sort #'1+ '(7 6 10 9 8)))
+(format t "List of Items being Organized by the Merge Sort: (7 6 10 9 8) ~%")
+; (format t "Result of the Above List being Organized: ~d~%" (Merge-Sort '(7 6 10 9 8)))
+(format t "Result of the Above List being Organized with a Merge Sort: ~d~%~%" (MergeLoop 0 0 '(3 5 10 4 2) '(7 6 1 9 8) '())) ;Temporary function call to test the "Merge" Function, will use "Merge-Sort" in the final version
+; (format t "Result of the Above List being Organized with a Merge Sort: ~d~%~%" (Bubble-Sort-InnerLoop2 0 '(7 6 10 9 8))) ;Temporary function call to test the "Merge" Function, will use "Merge-Sort" in the final version
 
 ; Bonus:
 ; (format t "List of Items being Organized by the Quick Sort: (11 14 15 12 13) ~%")
-; (format t "Result of the Above List being Organized: ~d~%" (Quick-Sort #'1+ '(11 14 15 12 13)))
+; (format t "Result of the Above List being Organized: ~d~%" (Quick-Sort '(11 14 15 12 13)))
