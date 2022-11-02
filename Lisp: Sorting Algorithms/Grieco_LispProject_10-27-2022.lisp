@@ -72,22 +72,51 @@
     ;"If Statements" before the "While Loop" in "MERGE" -> Both Fail
     ;Next 7 Lines don't work yet (but are needed)
     ; (if (= (length left) 0)
-    ;     right
+    ;     (append mergeLst (list(list-after-item 0 right)))
     ; )
     
     ; (if (= (length right) 0)
-    ;     left
+    ;     (append mergeLst (list(list-after-item 0 left)))
     ; )
 
     ;"If Statements" following the "While Loop" in "MERGE" -> Both Fail
-    ; (if (and (< currentIndex-Left (length left)) (= currentIndex-Right (- (length right) 1)))
-    ;     (append mergeLst (list(list-after-item currentIndex-Left left)))
-    ;     (format t "fail1 ") ;Temporary
+    ; (if (and (< currentIndex-Left (length left) ) (= currentIndex-Right (length right)))
+    ;     ; mergeLst
+    ;         (MergeLoop (length left) currentIndex-Right left right (append mergeLst (list(retrieve-item currentIndex-Left left))))
+    ;         mergeLst
+    ;     ; (append mergeLst (list(list-after-item currentIndex-Left left))) ;Temporary
+    ;     ; (format t "fail1 ") ;Temporary
+    ;     ; (MergeLoop (= currentIndex-Left (length left)) currentIndex-Right left right (append mergeLst (list(retrieve-item currentIndex-Left left))))
     ; )
 
-    ; (if (and (< currentIndex-Right (length right) ) (= currentIndex-Left (- (length left) 1)))
-    ;     (append mergeLst (list(list-after-item currentIndex-Right right)))
-    ;     (format t "fail2 ") ;Temporary
+    ; (if (and (< currentIndex-Right (length right) (= currentIndex-Left (length left))))
+    ;     ; mergeLst
+
+    ;         (MergeLoop currentIndex-Left (length right) left right (append mergeLst (list(retrieve-item currentIndex-Right right))))
+    ;         mergeLst
+    ;     ; (append mergeLst (list(list-after-item currentIndex-Right right))) ;Temporary
+    ;     ; (format t "fail2 ") ;Temporary
+        
+    ; )
+
+    ;"If Statements" following the "While Loop" in "MERGE" -> Fails to make any changes to the outputted mergeLst at this point...
+    ; (if (or (= currentIndex-Left (length left)) (= currentIndex-Right (length right)))
+    ;     (if (< currentIndex-Left (length left))
+    ;         ; (format t "Success ~%Left Length: ~d~%Maximum Left Length: ~d~%" currentIndex-Left (length left)) ;TEMPORARY TEST
+    ;         ; (MergeLoop (length left) currentIndex-Right left right (append mergeLst (list(retrieve-item currentIndex-Left left))))
+    ;         (append (list(list-after-item currentIndex-Left left)) mergeLst)
+    ;         ; (format t "Failure ~%Left Length: ~d~%Maximum Left Length: ~d~%" currentIndex-Left (length left)) ;TEMPORARY TEST
+         
+    ;         ; (MergeLoop (length left) currentIndex-Right left right (append mergeLst (list(retrieve-item currentIndex-Left left))))
+    ;     )
+        
+    ;     (if (< currentIndex-Right (length right))
+    ;         ; (format t "Success~%Right Length: ~d~%Maximum Right Length: ~d~%" currentIndex-Right (length right)) ;TEMPORARY TEST
+    ;         ; (format t "Failure~%Right Length: ~d~%Maximum Right Length: ~d~%" currentIndex-Right (length right)) ;TEMPORARY TEST
+    ;         (append (list(list-after-item currentIndex-Right right)) mergeLst)
+
+    ;         ; (MergeLoop currentIndex-Left (length right) left right (append mergeLst (list(retrieve-item currentIndex-Right right))))
+    ;     )
     ; )
 
     ;"While Loop"  in "MERGE" -> Works
@@ -96,15 +125,42 @@
             (MergeLoop (+ currentIndex-Left 1) currentIndex-Right left right (append mergeLst (list(retrieve-item currentIndex-Left left))))
             (MergeLoop currentIndex-Left (+ currentIndex-Right 1) left right (append mergeLst (list(retrieve-item currentIndex-Right right))))
         )
-        mergeLst
-    )
+        ; if statement ;(format t "end while loop ~%")
+        
+        (if (< currentIndex-Left (length left))
+            ; (format t "Success ~%Left Length: ~d~%Maximum Left Length: ~d~%" currentIndex-Left (length left)) ;TEMPORARY TEST
+            ; (MergeLoop (length left) currentIndex-Right left right (append mergeLst (list(retrieve-item currentIndex-Left left))))
+            (append mergeLst (list-after-item (- currentIndex-Left 1) left) )
+            ; (format t "Failure ~%Left Length: ~d~%Maximum Left Length: ~d~%" currentIndex-Left (length left)) ;TEMPORARY TEST
+         
+            ; (MergeLoop (length left) currentIndex-Right left right (append mergeLst (list(retrieve-item currentIndex-Left left))))
+            (if (< currentIndex-Right (length right))
+            ; (format t "Success~%Right Length: ~d~%Maximum Right Length: ~d~%" currentIndex-Right (length right)) ;TEMPORARY TEST
+            ; (format t "Failure~%Right Length: ~d~%Maximum Right Length: ~d~%" currentIndex-Right (length right)) ;TEMPORARY TEST
+                (append mergeLst (list-after-item (- currentIndex-Right 1) right) )
+                mergeLst
 
-    ; (if (< currentIndex-Left (length left))
-    ;     (append mergeLst (list(list-after-item currentIndex-Left left)))
+            ; (MergeLoop currentIndex-Left (length right) left right (append mergeLst (list(retrieve-item currentIndex-Right right))))
+            )
+        )
+    )
+        ; mergeLst
+        ; (format t "Left Length: ~d~%Maximum Left Length: ~d~%Right Length: ~d~%Maximum Right Length: ~d~%" currentIndex-Left (length left) currentIndex-Right (length right)) ;TEMPORARY TEST
     ; )
 
-    ; (if (< currentIndex-Right (length right))
+    ; (if (< currentIndex-Left (- (length left) 1))
+    ;     ; (MergeLoop (length left) (length right) left right (append mergeLst (list(list-after-item currentIndex-Left left))))
+    ;     (append mergeLst (list(list-after-item currentIndex-Left left)))
+    ;     ; (format t "left list fail ~%") ;Temporary
+    ;     mergeLst
+    ; )
+
+    ; (if (< currentIndex-Right (- (length right) 1))
+    ;     ; (MergeLoop (length left) (length right) left right (append mergeLst (list(list-after-item currentIndex-Right right))))
+
     ;     (append mergeLst (list(list-after-item currentIndex-Right right)))
+    ;     ; (format t "right list fail ~%") ;Temporary
+    ;     mergeLst
     ; )
 
     ; mergeLst
