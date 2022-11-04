@@ -43,7 +43,6 @@
         (Bubble-Sort-OuterLoop currentIndex (Bubble-Sort-InnerLoop currentIndex lst) (+ currentLoop 1))
         lst
     )
-    lst
 )
 
 ;Acts as the inner "for loop" in a regular Bubble Sort in any Procedural or Object-Oriented Language
@@ -62,35 +61,84 @@
     )
 )
 
-;Repetitive recursive call for the Merge Sort Algorithm
-(defun Merge-Sort (lst); currentIndex-Left currentIndex-Right left right mergeLst)
-    (if (<= (length lst) 1)
-        ; (append lst (MergeLoop 0 0 (Merge-Sort(list-before-item (floor (length lst) 2) lst)) (Merge-Sort(list-after-item (- (floor (length lst) 2) 1) lst) '())))
-        ; (append lst (MergeLoop 0 0 (list-before-item (floor (length lst) 2) lst) (list-after-item (- (floor (length lst) 2) 1) lst) '()))
-        ; (MergeLoop 0 0 (list-before-item (floor (length lst) 2) lst) (list-after-item (- (floor (length lst) 2) 1) lst) '())
-        
-        lst
+;Original Implementation (runs an infinite loop):
+        ; ; ;Implementation of the Merge Sort Algorithm (controls the "swapping" of elements from the two separate lists that are passed to it)
+        ; (defun MergeLoop (currentIndex-Left currentIndex-Right left right mergeLst)
+            
+        ;     ; Compares which element in the "left" or "right" list is less than the other and then adds it to the new "mergeLst"
+        ;     (if (and (< currentIndex-Left (length left)) (< currentIndex-Right (length right)))
+        ;         (if (< (retrieve-item currentIndex-Left left) (retrieve-item currentIndex-Right right))
+        ;             (MergeLoop (+ currentIndex-Left 1) currentIndex-Right left right (append mergeLst (list(retrieve-item currentIndex-Left left))))
+        ;             (MergeLoop currentIndex-Left (+ currentIndex-Right 1) left right (append mergeLst (list(retrieve-item currentIndex-Right right))))
+        ;         )
+                
+        ;         ;Checks if there are any remaning elements in either the "left" or "right" list (and if there are the rest of those elements are immediataley added to the end of the new "mergeLst" list)
+        ;         (if (< currentIndex-Left (length left))
+        ;             ; (format t "Success ~%Left Length: ~d~%Maximum Left Length: ~d~%" currentIndex-Left (length left)) ;TEMPORARY TEST
+        ;             ; (MergeLoop (length left) currentIndex-Right left right (append mergeLst (list(retrieve-item currentIndex-Left left))))
+        ;             (append mergeLst (list-after-item (- currentIndex-Left 1) left) )
+        ;             ; (format t "Failure ~%Left Length: ~d~%Maximum Left Length: ~d~%" currentIndex-Left (length left)) ;TEMPORARY TEST
+                
+        ;             ; (MergeLoop (length left) currentIndex-Right left right (append mergeLst (list(retrieve-item currentIndex-Left left))))
+        ;             (if (< currentIndex-Right (length right))
+        ;             ; (format t "Success~%Right Length: ~d~%Maximum Right Length: ~d~%" currentIndex-Right (length right)) ;TEMPORARY TEST
+        ;             ; (format t "Failure~%Right Length: ~d~%Maximum Right Length: ~d~%" currentIndex-Right (length right)) ;TEMPORARY TEST
+        ;                 (append mergeLst (list-after-item (- currentIndex-Right 1) right) )
+        ;                 mergeLst
 
-        ; (if (> (floor (length lst) 2) 1) 
-        ; (if (> (length lst) 1)
-        (MergeLoop 0 0 (Merge-Sort (list-before-item (floor (length lst) 2) lst)) (Merge-Sort (list-after-item (- (floor (length lst) 2) 0) lst)) '()) ;RUNTIME ERROR HERE (NO ERROR MESSAGE, BUT PROGRAM RUNS FOREVER)
-            ; lst
+        ;             ; (MergeLoop currentIndex-Left (length right) left right (append mergeLst (list(retrieve-item currentIndex-Right right))))
+        ;             )
+        ;         )
+        ;     )
         ; )
-        ; (Merge-Sort (list-before-item (floor (length lst) 2) lst))
-            ; (Merge-Sort (list-after-item (- (floor (length lst) 2) 1) lst))
-            ; lst
-        
-        ; (list-before-item (floor (length lst) 2) lst) ;Prints out first 2 elements of the list
-        ; (list-after-item (- (floor (length lst) 2) 1) lst) ;Prints out final 3 elements in the list
 
-        ; lst
+        ; ;Repetitive recursive call for the Merge Sort Algorithm
+        ; (defun Merge-Sort (lst); currentIndex-Left currentIndex-Right left right mergeLst)
+        ;     (print lst)
+        ;     (if (<= (length lst) 1)
+        ;         ; (append lst (MergeLoop 0 0 (Merge-Sort(list-before-item (floor (length lst) 2) lst)) (Merge-Sort(list-after-item (- (floor (length lst) 2) 1) lst) '())))
+        ;         ; (append lst (MergeLoop 0 0 (list-before-item (floor (length lst) 2) lst) (list-after-item (- (floor (length lst) 2) 1) lst) '()))
+        ;         ; (MergeLoop 0 0 (list-before-item (floor (length lst) 2) lst) (list-after-item (- (floor (length lst) 2) 1) lst) '())
+                
+        ;         lst
+
+        ;         ; (if (> (floor (length lst) 2) 1) 
+        ;         ; (if (> (length lst) 1)
+        ;         (MergeLoop 
+        ;             0
+        ;             0
+        ;             (Merge-Sort 
+        ;                 (list-before-item
+        ;                     (+ (floor (length lst) 2) 1)
+        ;                     lst
+        ;                 )
+        ;             )
+        ;             (Merge-Sort
+        ;                 (list-after-item
+        ;                     (- (floor (length lst) 2) 0)
+        ;                     lst
+        ;                 )
+        ;             )
+        ;             '()
+        ;         ) ;RUNTIME ERROR HERE (NO ERROR MESSAGE, BUT PROGRAM RUNS FOREVER)
+        ;             ; lst
+        ;         ; )
+        ;         ; (Merge-Sort (list-before-item (floor (length lst) 2) lst))
+        ;             ; (Merge-Sort (list-after-item (- (floor (length lst) 2) 1) lst))
+        ;             ; lst
+                
+        ;         ; (list-before-item (floor (length lst) 2) lst) ;Prints out first 2 elements of the list
+        ;         ; (list-after-item (- (floor (length lst) 2) 1) lst) ;Prints out final 3 elements in the list
+
+        ;         ; lst
+        ;         ; )
+        ;     )
+
+        ;     ; (MergeLoop 0 0 (Merge-Sort (list-before-item (floor (length lst) 2) lst)) (Merge-Sort(list-after-item (- (floor (length lst) 2) 1) lst)) '())
+
+        ;     ; lst
         ; )
-    )
 
-    ; (MergeLoop 0 0 (Merge-Sort (list-before-item (floor (length lst) 2) lst)) (Merge-Sort(list-after-item (- (floor (length lst) 2) 1) lst)) '())
-
-    ; lst
-)
 
 ;Implementation of the Merge Sort Algorithm (controls the "swapping" of elements from the two separate lists that are passed to it)
 (defun MergeLoop (currentIndex-Left currentIndex-Right left right mergeLst)
@@ -122,6 +170,53 @@
     )
 )
 
+;Repetitive recursive call for the Merge Sort Algorithm
+(defun Merge-Sort (lst); currentIndex-Left currentIndex-Right left right mergeLst)
+    ; (print lst) ;Temporary
+    (if (<= (length lst) 1)
+        ; (append lst (MergeLoop 0 0 (Merge-Sort(list-before-item (floor (length lst) 2) lst)) (Merge-Sort(list-after-item (- (floor (length lst) 2) 1) lst) '())))
+        ; (append lst (MergeLoop 0 0 (list-before-item (floor (length lst) 2) lst) (list-after-item (- (floor (length lst) 2) 1) lst) '()))
+        ; (MergeLoop 0 0 (list-before-item (floor (length lst) 2) lst) (list-after-item (- (floor (length lst) 2) 1) lst) '())
+        
+        lst
+
+        ; (if (> (floor (length lst) 2) 1) 
+        ; (if (> (length lst) 1)
+        (MergeLoop 
+            0
+            0
+            (Merge-Sort 
+                (list-before-item
+                    (+ (floor (length lst) 2) 1)
+                    lst
+                )
+            )
+            (Merge-Sort
+                (list-after-item
+                    (- (floor (length lst) 2) 0)
+                    lst
+                )
+            )
+            '()
+        ) ;RUNTIME ERROR HERE (NO ERROR MESSAGE, BUT PROGRAM RUNS FOREVER)
+            ; lst
+        ; )
+        ; (Merge-Sort (list-before-item (floor (length lst) 2) lst))
+            ; (Merge-Sort (list-after-item (- (floor (length lst) 2) 1) lst))
+            ; lst
+        
+        ; (list-before-item (floor (length lst) 2) lst) ;Prints out first 2 elements of the list
+        ; (list-after-item (- (floor (length lst) 2) 1) lst) ;Prints out final 3 elements in the list
+
+        ; lst
+        ; )
+    )
+
+    ; (MergeLoop 0 0 (Merge-Sort (list-before-item (floor (length lst) 2) lst)) (Merge-Sort(list-after-item (- (floor (length lst) 2) 1) lst)) '())
+
+    ; lst
+)
+
 ; Bonus:
 ; (defun Quick-Sort)
 ; (defun Partition (indexCounter lst left pivot right)
@@ -148,8 +243,8 @@
 
 (format t "List of Items being Organized by the Merge Sort: (7 6 10 9 8) ~%")
 (format t "Result of the Above List being Organized: ~d~%~%" (Merge-Sort '(7 6 10 9 8)))
+; (format t "Result of the Above List being Organized with a Merge Sort: ~d~%~%" (MergeLoop 0 0 '(3 5 10 4 2) '(7 6 1 9 8) '())) ;Temporary function call to test the "Merge" Function, will use "Merge-Sort" in the final version
 
-; ; (format t "Result of the Above List being Organized with a Merge Sort: ~d~%~%" (MergeLoop 0 0 '(3 5 10 4 2) '(7 6 1 9 8) '())) ;Temporary function call to test the "Merge" Function, will use "Merge-Sort" in the final version
 ; ; (format t "Result of the Above List being Organized with a Merge Sort: ~d~%~%" (MergeLoop 0 0 (list-before-item (floor (length lst) 2)) (list-after-item (- (floor (length lst) 2)) 1) '())) ;Temporary function call to test the "Merge" Function, will use "Merge-Sort" in the final version
 
 ; Bonus:
