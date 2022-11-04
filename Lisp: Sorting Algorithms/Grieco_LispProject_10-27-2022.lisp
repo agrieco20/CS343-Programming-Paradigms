@@ -142,69 +142,15 @@
 
 ;Implementation of the Merge Sort Algorithm (controls the "swapping" of elements from the two separate lists that are passed to it)
 (defun MergeLoop (currentIndex-Left currentIndex-Right left right mergeLst)
-    
-    ; (if (= (length left) 0)
-    ;     (append mergeLst right)
-    ;     (if (= (length right) 0)
-    ;         (append mergeLst left)
-    ;         mergeLst
-    ;     )
-    ;     ;;;;;;;; mergeLst
-    ; )
-    ; ;;;;;; mergeLst
 
-    ; ; Compares which element in the "left" or "right" list is less than the other and then adds it to the new "mergeLst"
-    ; (if (and (< currentIndex-Left (length left)) (< currentIndex-Right (length right)))
-    ;     (if (< (retrieve-item currentIndex-Left left) (retrieve-item currentIndex-Right right))
-    ;         (MergeLoop (+ currentIndex-Left 1) currentIndex-Right left right (append mergeLst (list(retrieve-item currentIndex-Left left))))
-    ;         (MergeLoop currentIndex-Left (+ currentIndex-Right 1) left right (append mergeLst (list(retrieve-item currentIndex-Right right))))
-    ;     )
-        
-    ;     ;Checks if there are any remaning elements in either the "left" or "right" list (and if there are the rest of those elements are immediataley added to the end of the new "mergeLst" list)
-    ;     (if (< currentIndex-Left (length left))
-    ;         ; (format t "Success ~%Left Length: ~d~%Maximum Left Length: ~d~%" currentIndex-Left (length left)) ;TEMPORARY TEST
-    ;         ; (MergeLoop (length left) currentIndex-Right left right (append mergeLst (list(retrieve-item currentIndex-Left left))))
-    ;         (append mergeLst (list-after-item (- currentIndex-Left 1) left) ) ;(cdr left))
-    ;         ; (format t "Failure ~%Left Length: ~d~%Maximum Left Length: ~d~%" currentIndex-Left (length left)) ;TEMPORARY TEST
-         
-    ;         ; (MergeLoop (length left) currentIndex-Right left right (append mergeLst (list(retrieve-item currentIndex-Left left))))
-    ;         (if (< currentIndex-Right (length right))
-    ;         ; (format t "Success~%Right Length: ~d~%Maximum Right Length: ~d~%" currentIndex-Right (length right)) ;TEMPORARY TEST
-    ;         ; (format t "Failure~%Right Length: ~d~%Maximum Right Length: ~d~%" currentIndex-Right (length right)) ;TEMPORARY TEST
-    ;             (append mergeLst (list-after-item (- currentIndex-Right 1) right) ) ;(cdr right))
-    ;             mergeLst
-
-    ;         ; (MergeLoop currentIndex-Left (length right) left right (append mergeLst (list(retrieve-item currentIndex-Right right))))
-    ;         )
-    ;     )
-    ; )
-
-    ; Compares which element in the "left" or "right" list is less than the other and then adds it to the new "mergeLst"
-    ; (if (= (length left) 0)
-    ;     (append mergeLst right)
-    ;     (if (= (length right) 0)
-    ;         (append mergeLst left)
-    ;         mergeLst
-    ;     )
-    ; )
-
-    ; (if (or (= (length left) 0) (= (length right) 0))
-    ;     (if (= (length left) 0)
-    ;         (append mergeLst right)
-    ;         (append mergeLst left)
-            ;)
-
-    ; )
-
-    (if (or (= (length left) 0) (= (length right) 0)) ;Checks if one of the two lists are empty (if so, return the list that isn't empty)
+    ;Checks if one of the two lists are empty (if so, return the list that isn't empty)
+    (if (or (= (length left) 0) (= (length right) 0))
         (if (= (length left) 0)
-            ;;; (print "zero length: right")
-            ;;; (print "zero length: left")
             (append mergeLst right)
             (append mergeLst left)
         )
         
-        ; ; Compares which element in the "left" or "right" list is less than the other and then adds it to the new "mergeLst"
+        ;Compares which element in the "left" or "right" list is less than the other and then adds it to the new "mergeLst"
         (if (and (< currentIndex-Left (length left)) (< currentIndex-Right (length right)))
             (if (< (retrieve-item currentIndex-Left left) (retrieve-item currentIndex-Right right))
                 (MergeLoop (+ currentIndex-Left 1) currentIndex-Right left right (append mergeLst (list(retrieve-item currentIndex-Left left))))
@@ -246,7 +192,7 @@
 )
 
 ;Repetitive recursive call for the Merge Sort Algorithm
-(defun Merge-Sort (lst); currentIndex-Left currentIndex-Right left right mergeLst)
+(defun Merge-Sort (lst)
     (print lst) ;Temporary
     (if (<= (length lst) 1)
         ; (append lst (MergeLoop 0 0 (Merge-Sort(list-before-item (floor (length lst) 2) lst)) (Merge-Sort(list-after-item (- (floor (length lst) 2) 1) lst) '())))
@@ -331,6 +277,7 @@
 
 (format t "List of Items being Organized by the Merge Sort: (7 6 10 9 8) ~%")
 (format t "Result of the Above List being Organized: ~d~%~%" (Merge-Sort '(7 6 10 9 8)))
+; (format t "Result of the Above List being Organized: ~d~%~%" (Merge-Sort '(23 8 42 1 3)))
 ; (format t "Result of the Above List being Organized with a Merge Sort: ~d~%~%" (MergeLoop 0 0 '(6 7) '(8 9 10) '())) ;Temporary function call to test the "Merge" Function, will use "Merge-Sort" in the final version ; (2 3 5 6 10) '(1 4 7 8 9)
 
 ; ; (format t "Result of the Above List being Organized with a Merge Sort: ~d~%~%" (MergeLoop 0 0 (list-before-item (floor (length lst) 2)) (list-after-item (- (floor (length lst) 2)) 1) '())) ;Temporary function call to test the "Merge" Function, will use "Merge-Sort" in the final version
