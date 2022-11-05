@@ -15,7 +15,6 @@
     (if (<= currentIndex 0)
         nil
         (append (list(car lst)) (list-before-item (- currentIndex 1) (cdr lst)))
-        ; (cons (car lst) (list-before-item (- currentIndex 1) (cdr lst)))
     )
 )
 
@@ -83,14 +82,14 @@
 
                 ;Checks Left list
                 (if (> currentIndex-Left 0)
-                    (append mergeLst (list-after-item (- currentIndex-Left 1) left) ) ;(cdr left))
+                    (append mergeLst (list-after-item (- currentIndex-Left 1) left))
                     (append mergeLst left)
                 )
 
                 ;Checks Right list
                 (if (< currentIndex-Right (length right))
                     (if (> currentIndex-Right 0)
-                        (append mergeLst (list-after-item (- currentIndex-Right 1) right) ) ;(cdr right))
+                        (append mergeLst (list-after-item (- currentIndex-Right 1) right))
                         (append mergeLst right)
                     )
                     mergeLst ;Return
@@ -100,7 +99,7 @@
     )
 )
 
-;Repetitive recursive call for the Merge Sort Algorithm
+;Repetitive recursive call for the Merge Sort Algorithm (to compare and organize all elements within the list)
 (defun Merge-Sort (lst)
 
     (if (<= (length lst) 1)
@@ -127,25 +126,93 @@
 )
 
 ; Bonus:
-; (defun Quick-Sort)
-; (defun Partition (indexCounter lst left pivot right)
 
-;     ; (append pivot (list(retrieve-item 0 lst)))
-
-;     (if (< indexCounter (- (length lst) 1))
-;         (if (<= (retrieve-item (+ indexCounter 1) lst) pivot)
-;             ; (append left (list(retrieve-item indexCounter lst)))
-;             (Partition 0 lst (append left (list(retrieve-item indexCounter lst))) pivot right)
-            
-;             (if (> (retrieve-item (+ indexCounter 1) lst) pivot)
-;                 ; (append right (list(retrieve-item indexCounter lst)))
-;                 (Partition 0 lst left pivot (append right (list(retrieve-item indexCounter lst))))
-;                 (append (list left) (list pivot) (list right))
-;             )
-;         )
+;Repetitive recursive call for the Quick Sort Algorithm (to compare and organize all elements within the list)
+; (defun Quick-Sort (lst)
+;     (if (<= (length lst) 1)
+;         lst
+;         (Partition 0 0 lst '() (retrieve-item 0 '(11 14 15 12 13)) '())
 ;     )
-;     ; Partition
+
 ; )
+
+;Implementation of the Quick Sort Algorithm (controls the "swapping" of elements using the pivot as the determiner as to whether elements should be added to the "left" or "right" list)
+(defun Partition (indexCounter loopCounter lst left pivot right)
+; (defun Partition (loopCounter lst left pivot right)
+
+    ; (append pivot (list(retrieve-item 0 lst)))
+
+    ; (if (< indexCounter (- (length lst) 1))
+    ;     (if (<= (retrieve-item (+ indexCounter 1) lst) pivot)
+    ;         ; (append left (list(retrieve-item indexCounter lst)))
+    ;         (Partition 0 lst (append left (list(retrieve-item indexCounter lst))) pivot right)
+            
+    ;         (if (> (retrieve-item (+ indexCounter 1) lst) pivot)
+    ;             ; (append right (list(retrieve-item indexCounter lst)))
+    ;             (Partition 0 lst left pivot (append right (list(retrieve-item indexCounter lst))))
+    ;             (append (list left) (list pivot) (list right))
+    ;         )
+    ;     )
+    ; )
+    ; Partition
+    ; (print loopCounter) ;TEMPORARY
+
+    (if (< loopCounter (length lst))
+    ; (append pivot (retrieve-item 0 lst))
+        (if (> (+ indexCounter 1) (- (length lst) 1))
+            ; ;;;(format t "Length: ~d~%" indexCounter) ;TEMPORARY
+            (Partition 0 (+ loopCounter 1) (append left (list pivot) right) '() (retrieve-item 0 (append left (list pivot) right)) '())
+            ; (print left) ;TEMPORARY
+
+            ; ;;;;;lst
+            (if (<= (retrieve-item (+ indexCounter 1) lst) pivot)
+            ;     ; (append left (list (retrieve-item indexCounter lst)))
+            ;     ; (append right (list (retrieve-item indexCounter lst)))
+            ;     ;;;;;;;;; (Partition 0 lst left pivot right)
+                ; ;;;;(print (append left (list (retrieve-item indexCounter lst)))) ;TEMPORARY
+                ; (print pivot) ;TEMPORARY
+                (Partition (+ indexCounter 1) loopCounter lst (append left (list (retrieve-item (+ indexCounter 1) lst))) pivot right)
+                ;;;;;(print (append right (list (retrieve-item indexCounter lst)))) ;TEMPORARY
+                ; (print pivot) ;TEMPORARY
+                (Partition (+ indexCounter 1) loopCounter lst left pivot (append right (list (retrieve-item (+ indexCounter 1) lst))))
+            )
+            ; ;;;;;lst
+            ;;;;;;;(format t "Length: ~d~%" indexCounter)
+        )
+        lst
+    )
+
+    ; (if (< loopCounter (- (length lst) 1))
+    ; ; (append pivot (retrieve-item 0 lst))
+    ;     (if (= (- (length lst) 1) 0)
+    ;         ; ;;;(format t "Length: ~d~%" indexCounter) ;TEMPORARY
+    ;         ; (Partition (+ loopCounter 1) (append left (list pivot) right) '() (car (append left (list pivot) right)) '())
+    ;         (print pivot) ;TEMPORARY
+
+    ;         ; ;;;;;lst
+    ;         (if (<= (car lst) pivot)
+    ;         ;     ; (append left (list (retrieve-item indexCounter lst)))
+    ;         ;     ; (append right (list (retrieve-item indexCounter lst)))
+    ;         ;     ;;;;;;;;; (Partition 0 lst left pivot right)
+    ;             ; ;;;;(print (append left (list (retrieve-item indexCounter lst)))) ;TEMPORARY
+    ;             ; (print pivot) ;TEMPORARY
+    ;             (Partition loopCounter (cdr lst) (append left (list (car lst))) pivot right)
+    ;             ;;;;;(print (append right (list (retrieve-item indexCounter lst)))) ;TEMPORARY
+    ;             ; (print pivot) ;TEMPORARY
+    ;             (Partition loopCounter (cdr lst) left pivot (append right (list (car lst))))
+    ;         )
+    ;         ; ;;;;;lst
+    ;         ;;;;;;;(format t "Length: ~d~%" indexCounter)
+    ;     )
+    ;     lst
+    ; )
+
+    ; (if ((retrieve-item indexCounter lst) <= pivot)
+    ;     (append left (list-after-item indexCounter lst))
+    ;     (append right (list-after-item indexCounter lst))
+    ;     ; (Partition 0 lst left pivot right)
+    ; )
+)
 
 (format t "List of Items being Organized by the Bubble Sort: ~d~%" '(3 5 1 4 2))
 (format t "Result of the Above List being Organized with a Bubble Sort: ~d~%~%" (Bubble-Sort-OuterLoop 0 '(3 5 1 4 2) 0))
@@ -154,6 +221,7 @@
 (format t "Result of the Above List being Organized: ~d~%~%" (Merge-Sort '(7 6 10 9 8)))
 
 ; Bonus:
-; (format t "List of Items being Organized by the Quick Sort: ~d~%" '(11 14 15 12 13))
-; ; (format t "Result of the Above List being Organized: ~d~%" (Quick-Sort '(11 14 15 12 13)))
-; (format t "Result of the Above List being Organized: ~d~%" (Partition 0 '(11 14 15 12 13) '() (retrieve-item 0 '(11 14 15 12 13)) '()))
+(format t "List of Items being Organized by the Quick Sort: ~d~%" '(14 11 15 13 12))
+; (format t "Result of the Above List being Organized: ~d~%" (Quick-Sort '(14 11 15 13 12)))
+(format t "Result of the Above List being Organized: ~d~%" (Partition 0 0 '(14 11 15 13 12) '() (retrieve-item 0 '(14 11 15 13 12)) '()))
+; (format t "Result of the Above List being Organized: ~d~%" (Partition 0 '(14 11 15 13 12) '() (car '(14 11 15 13 12)) '()))
