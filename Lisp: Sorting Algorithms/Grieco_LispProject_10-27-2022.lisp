@@ -128,13 +128,13 @@
 ; Bonus:
 
 ;Repetitive recursive call for the Quick Sort Algorithm (to compare and organize all elements within the list)
-; (defun Quick-Sort (lst)
-;     (if (<= (length lst) 1)
-;         lst
-;         (Partition 0 0 lst '() (retrieve-item 0 '(11 14 15 12 13)) '())
-;     )
+(defun Quick-Sort (lst)
+    (if (<= (length lst) 1)
+        lst
+        (Partition 0 0 lst '() (retrieve-item 0 lst) '())
+    )
 
-; )
+)
 
 ;Implementation of the Quick Sort Algorithm (controls the "swapping" of elements using the pivot as the determiner as to whether elements should be added to the "left" or "right" list)
 (defun Partition (indexCounter loopCounter lst left pivot right)
@@ -222,6 +222,6 @@
 
 ; Bonus:
 (format t "List of Items being Organized by the Quick Sort: ~d~%" '(14 11 15 13 12))
-; (format t "Result of the Above List being Organized: ~d~%" (Quick-Sort '(14 11 15 13 12)))
-(format t "Result of the Above List being Organized: ~d~%" (Partition 0 0 '(14 11 15 13 12) '() (retrieve-item 0 '(14 11 15 13 12)) '()))
-; (format t "Result of the Above List being Organized: ~d~%" (Partition 0 '(14 11 15 13 12) '() (car '(14 11 15 13 12)) '()))
+(format t "Result of the Above List being Organized: ~d~%" (Quick-Sort '(14 11 15 13 12)))
+; (format t "Result of the Above List being Organized: ~d~%" (Partition 0 0 '(14 11 15 13 12) '() (retrieve-item 0 '(14 11 15 13 12)) '()))
+;;;;;;; (format t "Result of the Above List being Organized: ~d~%" (Partition 0 '(14 11 15 13 12) '() (car '(14 11 15 13 12)) '()))
