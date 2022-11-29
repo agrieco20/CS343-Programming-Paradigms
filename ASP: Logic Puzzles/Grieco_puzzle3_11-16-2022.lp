@@ -15,18 +15,17 @@
 % xavier(price, color, sign).
 
 % pendant(person, price, color, sign).
-pendant(person, price, color, sign).
+% pendant(person, price, color, sign).
 
 person(beth; lacy; victor; xavier).
 price(35; 40; 45; 50).
 color(blue; orange; red; yellow).
 sign(aquarius; libra; scorpio; virgo).
 
-% person1(a, b).
-
 % 1{pendant(W, X, Y, Z)}1 :- person(W), price(X), color(Y), sign(Z).
 % 1{pendant(person(W), price(X), color(Y), sign(Z))}1 :- person(W), price(X), color(Y), sign(Z).
 1{pendant(W, X, Y, Z): price(X), color(Y), sign(Z)}1 :- person(W).
+% 1{pendantName(A, pendant(W, X, Y, Z)): price(X), color(Y), sign(Z)}1 :- person(W), pendantName(A).
 
 % property(signName, givenValue, attribute). % For a property of a particular person with an astronomical sign, the pendant they bought has been assigned a specific "attribute" of "givenValue"
 
@@ -117,7 +116,37 @@ libra_redstone_OR_45Dollars_condition :- not pendant(W, X, red, libra), pendant(
 % :- person(W), person(X), not W = X.
 % :- pendant(A, _, _, _), pendant(B, _, _, _), person(A), person(B), not A = B.
 % person(A), person(B), 
-% :- pendantName(P1, pendant(A,B,C,D)), pendantName(P2, pendant(W,X,Y,Z)), person(A), price(B), color(C), sign(D), person(W), price(X), color(Y), sign(Z), not P1 = P2, not A = W, not B = X, not C = Y, not D = Z.
+
+
+pendantNameValue(one; two; three; four).
+% pendantName(PV, pendant(W, X, Y, Z)) :- pendantNameValue(PV), person(W), price(X), color(Y), sign(Z).
+
+% 1{pendantName(PV, pendant(W, X, Y, Z))}1 :- pendantNameValue(PV), person(W), price(X), color(Y), sign(Z).
+
+
+% :- pendantName(P1, pendant(W,X,Y,Z)), pendantName(P2, pendant(W,X,Y,Z)), pendantNameValue(P1), pendantNameValue(P2), person(W), price(X), color(Y), sign(Z), not P1 = P2.
+
+
+% :- pendantName(P1, pendant(A,_,_,_)), pendantName(P2, pendant(B,_,_,_)), person(A), person(B), P1 = P2, A = B.
+% :- pendant(A, _, _, _), pendant(B, _, _, _), person(A), person(B),  A = B.
+% :- pendant(A,B,C,D), pendant(W,X,Y,Z), person(A), price(B), color(C), sign(D), person(W), price(X), color(Y), sign(Z), not A = W, not B = X, not C = Y, not D = Z. % Works but does something weird and not what it should be doing
+
+% :- pendant(A,_,_,_), pendant(W,_,_,_), person(A), person(W), not A = W.
+% :- pendant(_,B,_,_), pendant(_,X,_,_), price(B), price(X), not B = X.
+% :- pendant(_,_,C,_), pendant(_,_,Y,_), color(C), color(Y), not C = Y.
+% :- pendant(_,_,_,D), pendant(_,_,_,Z), sign(D), sign(Z), not D = Z.
+
+% :- pendantName(P1, pendant(W,X,Y,Z)), pendantName(P2, pendant(W,X,Y,Z)), person(W), price(X), color(Y), sign(Z), not P1 = P2.
+
+% :- pendantName(P1, pendant(W,_,_,_)), pendantName(P2, pendant(W,_,_,_)), person(W), not P1 = P2.
+% :- pendantName(P1, pendant(_,X,_,_)), pendantName(P2, pendant(_,X,_,_)), price(X), not P1 = P2.
+% :- pendantName(P1, pendant(_,_,Y,_)), pendantName(P2, pendant(_,_,Y,_)), color(Y), not P1 = P2.
+% :- pendantName(P1, pendant(_,_,_,Z)), pendantName(P2, pendant(_,_,_,Z)), sign(Z), not P1 = P2.
+
+% :- pendant(A,_,_,_), pendant(W,_,_,_), person(A), person(W), not A = W.
+% :- pendant(_,B,_,_), pendant(_,X,_,_), price(B), price(X), not B = X.
+% :- pendant(_,_,C,_), pendant(_,_,Y,_), color(C), color(Y), not C = Y.
+% :- pendant(_,_,_,D), pendant(_,_,_,Z), sign(D), sign(Z), not D = Z.
 
 
 #show pendant/4.
