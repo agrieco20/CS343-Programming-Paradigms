@@ -35,12 +35,16 @@ pendantNameValue(one; two; three; four).
 % Rules:
 rule1 :- libra_redstone_OR_45Dollars_condition.%, libra_redstone_OR_45Dollars_condition2.
 % rule2 :- not property(libra, 50, price), not beth(50, _, _).
-rule2 :- %not pendant(U, W, 50, Y, Z), %DOESN'T WORK
-        not pendant(U, W, 50, Y, libra), 
-        not pendant(U, beth, 50, Y, Z),
-        not pendant(U, beth, X, Y, libra),
+% rule2 :- %%not pendant(U, W, 50, Y, Z), %DOESN'T WORK
+        :- pendant(U, W, 50, Y, libra), pendantNameValue(U), person(W),  color(Y). 
+        :- pendant(U, beth, 50, Y, Z), pendantNameValue(U), color(Y), sign(Z).
+        :- pendant(U, beth, X, Y, libra), pendantNameValue(U), price(X), color(Y).
+
+        % :- pendant(_, _, 50, _, libra). 
+        % :- pendant(_, beth, 50, _, _).
+        % not pendant(_, beth, _, _, libra),
         % not pendant(U,beth,50,Y,libra),
-        pendantNameValue(U), person(W), price(X), color(Y), sign(Z).
+        % pendantNameValue(U), person(W), price(X), color(Y), sign(Z).
 
 
 % % % rule3 :- not property(aquarius, red, color).
@@ -118,7 +122,7 @@ libra_redstone_OR_45Dollars_condition :- not pendant(U, W, X, red, Z),
 
 % Constraints: (The Statements defined in each of the Rules above must be true)
 :- not rule1. %WORKS
-:- not rule2. %DOESN'T WORK YET
+% :- not rule2. %DOESN'T WORK YET
 % :- not rule3.
 % :- not rule4.
 % :- not rule5.
@@ -167,13 +171,13 @@ libra_redstone_OR_45Dollars_condition :- not pendant(U, W, X, red, Z),
 % % 1{pendantSign(PN, Sign): person(Sign)}1 :- pendantNameValue(PN).
 % :- pendantNameValue(P1), pendantNameValue(P2), person(Sign), pendantSign(P1, Sign), pendantSign(P2, Sign), not P1 = P2.
 
-:- pendant(P1, Person, _, _, _), pendant(P2, Person, _, _, _), pendantNameValue(P1), pendantNameValue(P2), person(Person), not P1 = P2.
+:- pendant(P1, Person, _, _, _), pendant(P2, Person, _, _, _), pendantNameValue(P1), pendantNameValue(P2), person(Person), P1 != P2.
 
-:- pendant(P1, _, Price, _, _), pendant(P2, _, Price, _, _), pendantNameValue(P1), pendantNameValue(P2), price(Price), not P1 = P2.
+:- pendant(P1, _, Price, _, _), pendant(P2, _, Price, _, _), pendantNameValue(P1), pendantNameValue(P2), price(Price), P1 != P2.
 
-:- pendant(P1, _, _, Color, _), pendant(P2, _, _, Color, _), pendantNameValue(P1), pendantNameValue(P2), color(Color), not P1 = P2.
+:- pendant(P1, _, _, Color, _), pendant(P2, _, _, Color, _), pendantNameValue(P1), pendantNameValue(P2), color(Color), P1 != P2.
 
-:- pendant(P1, _, _, _, Sign), pendant(P2, _, _, _, Sign), pendantNameValue(P1), pendantNameValue(P2), sign(Sign), not P1 = P2.
+:- pendant(P1, _, _, _, Sign), pendant(P2, _, _, _, Sign), pendantNameValue(P1), pendantNameValue(P2), sign(Sign), P1 != P2.
 
 
 % :- pendantName(P1, pendant(W,_,_,_)), pendantName(P2, pendant(W,_,_,_)), person(W), not P1 = P2.
