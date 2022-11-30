@@ -22,9 +22,12 @@ price(35; 40; 45; 50).
 color(blue; orange; red; yellow).
 sign(aquarius; libra; scorpio; virgo).
 
+pendantNameValue(one; two; three; four).
+
 % 1{pendant(W, X, Y, Z)}1 :- person(W), price(X), color(Y), sign(Z).
 % 1{pendant(person(W), price(X), color(Y), sign(Z))}1 :- person(W), price(X), color(Y), sign(Z).
-1{pendant(W, X, Y, Z): price(X), color(Y), sign(Z)}1 :- person(W).
+1{pendant(U, W, X, Y, Z): person(W), price(X), color(Y), sign(Z)}1 :- pendantNameValue(U).
+
 % 1{pendantName(A, pendant(W, X, Y, Z)): price(X), color(Y), sign(Z)}1 :- person(W), pendantName(A).
 
 % property(signName, givenValue, attribute). % For a property of a particular person with an astronomical sign, the pendant they bought has been assigned a specific "attribute" of "givenValue"
@@ -32,38 +35,50 @@ sign(aquarius; libra; scorpio; virgo).
 % Rules:
 rule1 :- libra_redstone_OR_45Dollars_condition.%, libra_redstone_OR_45Dollars_condition2.
 % rule2 :- not property(libra, 50, price), not beth(50, _, _).
-rule2 :- not pendant(W, 50, Y, libra), 
-        not pendant(beth, 50, Y, Z), 
-        person(W), color(Y), sign(Z).
-% rule3 :- not property(aquarius, red, color).
-rule3 :- not pendant(W, X, red, aquarius), 
-        person(W), price(X).
-% rule4 :- property(scorpio, 50, price), not beth(_, _, scorpio), not beth(_, _, libra).
-rule4 :- pendant(W, 50, Y, scorpio), 
-        not pendant(beth, X, Y, scorpio), 
-        not pendant(beth, X, Y, libra), 
-        person(W), price(X), color(Y).
-% rule5 :- xavier(P1, _, _), property(Sign1, blue, color), property(Sign1, Sign1_Price, price), P1 < Sign1_Price, not xavier(_, blue, _).
-rule5 :- pendant(xavier, Xavier_Price, Y, Z), 
-        pendant(W, P1_Price, blue, Z), 
-        price(Xavier_Price) < price(P1_Price), 
-        not pendant (xavier, X, blue, Z), 
-        person(W), price(X), color(Y), sign(Z).%, 
-        % price(Xavier_Price), price(Price1).
+rule2 :- %not pendant(U, W, 50, Y, Z), %DOESN'T WORK
+        not pendant(U, W, 50, Y, libra), 
+        not pendant(U, beth, 50, Y, Z),
+        not pendant(U, beth, X, Y, libra),
+        % not pendant(U,beth,50,Y,libra),
+        pendantNameValue(U), person(W), price(X), color(Y), sign(Z).
 
-% rule6 :- property(Sign1, yellow, color), property(Sign1, P1_Price, price), beth(P1_Price + 5, _, _), not beth(_, yellow, _).
-rule6 :- pendant(beth, Beth_Price, Y, Z), 
-        pendant(W, P1_Price, yellow, Z),
-        price(Beth_Price) = price(P1_Price + 5), 
-        not pendant(beth, X, yellow, Z), 
-        person(W), price(X), color(Y), sign(Z).
+
+% % % rule3 :- not property(aquarius, red, color).
+% rule3 :- not pendant(U, W, X, red, aquarius), 
+%         pendantNameValue(U), person(W), price(X).
+% % % rule4 :- property(scorpio, 50, price), not beth(_, _, scorpio), not beth(_, _, libra).
+% rule4 :- pendant(U, W, 50, Y, scorpio), 
+%         not pendant(U, beth, X, Y, scorpio), 
+%         not pendant(U, beth, X, Y, libra), 
+%         pendantNameValue(U), person(W), price(X), color(Y).
+% % % rule5 :- xavier(P1, _, _), property(Sign1, blue, color), property(Sign1, Sign1_Price, price), P1 < Sign1_Price, not xavier(_, blue, _).
+% rule5 :- pendant(U, xavier, Xavier_Price, Y, Z), 
+%         pendant(U, W, P1_Price, blue, Z), 
+%         price(Xavier_Price) < price(P1_Price), %ERROR HERE
+%         not pendant (U, xavier, X, blue, Z), 
+%         pendantNameValue(U), person(W), price(X), color(Y), sign(Z).%, 
+%         %%% price(Xavier_Price), price(Price1).
+
+% % rule6 :- property(Sign1, yellow, color), property(Sign1, P1_Price, price), beth(P1_Price + 5, _, _), not beth(_, yellow, _).
+% rule6 :- pendant(U, beth, Beth_Price, Y, Z), 
+%         pendant(U, W, P1_Price, yellow, Z),
+%         Beth_Price = P1_Price + 5, %ERROR HERE %%%price(Beth_Price) = price(P1_Price) + 5, 
+%         not pendant(U, beth, X, yellow, Z), 
+%         pendantNameValue(U), person(W), price(X), color(Y), sign(Z), price(Beth_Price), price(P1_Price).
 
 % rule7 :- virgo_OR_35DollarsPaid_condition1, virgo_OR_35DollarsPaid_condition2.
 % rule7 :- virgo_OR_35DollarsPaid_condition.
 
 % For Rule 1: The Libra either bought a pendant with a red stone or paid $45
-libra_redstone_OR_45Dollars_condition :- pendant(W, X, red, libra), not pendant(W, 45, Y, libra), person(W), price(X), color(Y).
-libra_redstone_OR_45Dollars_condition :- not pendant(W, X, red, libra), pendant(W, 45, Y, libra), person(W), price(X), color(Y).
+libra_redstone_OR_45Dollars_condition :- pendant(U, W, X, red, Z), 
+                                        pendant(U, W, X, Y, libra), 
+                                        not pendant(U, W, 45, Y, Z), 
+                                        pendantNameValue(U), person(W), price(X), color(Y), sign(Z).
+
+libra_redstone_OR_45Dollars_condition :- not pendant(U, W, X, red, Z), 
+                                        pendant(U, W, X, Y, libra), 
+                                        pendant(U, W, 45, Y, Z), 
+                                        pendantNameValue(U), person(W), price(X), color(Y), sign(Z).
 
 
 % For Rule 7: The "Virgo" or the "person who bought the orange stone" either are "Lacy" or "paid $35"
@@ -102,15 +117,15 @@ libra_redstone_OR_45Dollars_condition :- not pendant(W, X, red, libra), pendant(
 
 
 % Constraints: (The Statements defined in each of the Rules above must be true)
-:- not rule1.
-:- not rule2.
-:- not rule3.
-:- not rule4.
-:- not rule5.
-:- not rule6.
+:- not rule1. %WORKS
+:- not rule2. %DOESN'T WORK YET
+% :- not rule3.
+% :- not rule4.
+% :- not rule5.
+% :- not rule6.
 % :- not rule7.
 
-% There is only one type of pennant purchased by each person (each with their own unique price, color, and sign)
+% There is only one type of pendant purchased by each person (each with their own unique price, color, and sign)
 %%% 1{pendant(W, X, Y, Z): price(X), color(Y), sign(Z)}1 :- person(W).
 % :- pendant(W, X, Y, Z), pendant(A, B, C, D), 
 % :- person(W), person(X), not W = X.
@@ -118,14 +133,15 @@ libra_redstone_OR_45Dollars_condition :- not pendant(W, X, red, libra), pendant(
 % person(A), person(B), 
 
 
-pendantNameValue(one; two; three; four).
+% pendantNameValue(one; two; three; four).
+
 % pendantName(PV, pendant(W, X, Y, Z)) :- pendantNameValue(PV), person(W), price(X), color(Y), sign(Z).
 
 % 1{pendantName(PV, pendant(W, X, Y, Z))}1 :- pendantNameValue(PV), person(W), price(X), color(Y), sign(Z).
 
 
 % :- pendantName(P1, pendant(W,X,Y,Z)), pendantName(P2, pendant(W,X,Y,Z)), pendantNameValue(P1), pendantNameValue(P2), person(W), price(X), color(Y), sign(Z), not P1 = P2.
-
+% 1{pendantName(A, pendant(W, X, Y, Z)): pendantNameValue(A)}1 :- person(W), price(X), color(Y), sign(Z).
 
 % :- pendantName(P1, pendant(A,_,_,_)), pendantName(P2, pendant(B,_,_,_)), person(A), person(B), P1 = P2, A = B.
 % :- pendant(A, _, _, _), pendant(B, _, _, _), person(A), person(B),  A = B.
@@ -138,6 +154,28 @@ pendantNameValue(one; two; three; four).
 
 % :- pendantName(P1, pendant(W,X,Y,Z)), pendantName(P2, pendant(W,X,Y,Z)), person(W), price(X), color(Y), sign(Z), not P1 = P2.
 
+
+% % 1{pendantPerson(PN, Person): person(Person)}1 :- pendantNameValue(PN).
+% :- pendantNameValue(P1), pendantNameValue(P2), person(Person), pendantPerson(P1, Person), pendantPerson(P2, Person), not P1 = P2.
+
+% % 1{pendantPrice(PN, Price): person(Price)}1 :- pendantNameValue(PN).
+% :- pendantNameValue(P1), pendantNameValue(P2), person(Price), pendantPrice(P1, Price), pendantPrice(P2, Price), not P1 = P2.
+
+% % 1{pendantColor(PN, Color): person(Color)}1 :- pendantNameValue(PN).
+% :- pendantNameValue(P1), pendantNameValue(P2), person(Color), pendantColor(P1, Color), pendantColor(P2, Color), not P1 = P2.
+
+% % 1{pendantSign(PN, Sign): person(Sign)}1 :- pendantNameValue(PN).
+% :- pendantNameValue(P1), pendantNameValue(P2), person(Sign), pendantSign(P1, Sign), pendantSign(P2, Sign), not P1 = P2.
+
+:- pendant(P1, Person, _, _, _), pendant(P2, Person, _, _, _), pendantNameValue(P1), pendantNameValue(P2), person(Person), not P1 = P2.
+
+:- pendant(P1, _, Price, _, _), pendant(P2, _, Price, _, _), pendantNameValue(P1), pendantNameValue(P2), price(Price), not P1 = P2.
+
+:- pendant(P1, _, _, Color, _), pendant(P2, _, _, Color, _), pendantNameValue(P1), pendantNameValue(P2), color(Color), not P1 = P2.
+
+:- pendant(P1, _, _, _, Sign), pendant(P2, _, _, _, Sign), pendantNameValue(P1), pendantNameValue(P2), sign(Sign), not P1 = P2.
+
+
 % :- pendantName(P1, pendant(W,_,_,_)), pendantName(P2, pendant(W,_,_,_)), person(W), not P1 = P2.
 % :- pendantName(P1, pendant(_,X,_,_)), pendantName(P2, pendant(_,X,_,_)), price(X), not P1 = P2.
 % :- pendantName(P1, pendant(_,_,Y,_)), pendantName(P2, pendant(_,_,Y,_)), color(Y), not P1 = P2.
@@ -149,7 +187,8 @@ pendantNameValue(one; two; three; four).
 % :- pendant(_,_,_,D), pendant(_,_,_,Z), sign(D), sign(Z), not D = Z.
 
 
-#show pendant/4.
+#show pendant/5.
+% #show pendantNameValue/1.
 % #show beth/3.
 % #show lacy/3.
 % #show victor/3.
