@@ -10,7 +10,7 @@ sign(aquarius; libra; scorpio; virgo).
 pendantNameValue(one; two; three; four).
 
 % Every pendant is assigned particular values (person, price, color, and sign)
-1{pendant(U, Person, Price, Color, Sign): person(Person), price(Price), color(Color), sign(Sign)}1 :- pendantNameValue(U).
+1{pendant(PendantValue, Person, Price, Color, Sign): person(Person), price(Price), color(Color), sign(Sign)}1 :- pendantNameValue(PendantValue).
 
 % There is only one type of pendant purchased by each person (each with their own unique price, color, and sign)
 :- pendant(P1, Person, _, _, _), pendant(P2, Person, _, _, _), pendantNameValue(P1), pendantNameValue(P2), person(Person), P1 != P2.
@@ -21,21 +21,21 @@ pendantNameValue(one; two; three; four).
 % Rules:
 
 % Rule 1:
-rule1 :- pendant(U, Person, Price, red, Sign), pendant(U, Person, Price, Color, libra), not pendant(U, Person, 45, Color, Sign), pendantNameValue(U), person(Person), price(Price), color(Color), sign(Sign).
-rule1 :- not pendant(U, Person, Price, red, Sign), pendant(U, Person, Price, Color, libra), pendant(U, Person, 45, Color, Sign), pendantNameValue(U), person(Person), price(Price), color(Color), sign(Sign).
+rule1 :- pendant(PendantValue, Person, Price, red, Sign), pendant(PendantValue, Person, Price, Color, libra), not pendant(PendantValue, Person, 45, Color, Sign), pendantNameValue(PendantValue), person(Person), price(Price), color(Color), sign(Sign).
+rule1 :- not pendant(PendantValue, Person, Price, red, Sign), pendant(PendantValue, Person, Price, Color, libra), pendant(PendantValue, Person, 45, Color, Sign), pendantNameValue(PendantValue), person(Person), price(Price), color(Color), sign(Sign).
 
 % Rule 2:
-:- pendant(U, Person, 50, Color, libra), pendantNameValue(U), person(Person),  color(Color). 
-:- pendant(U, beth, 50, Color, Sign), pendantNameValue(U), color(Color), sign(Sign).
-:- pendant(U, beth, Price, Color, libra), pendantNameValue(U), price(Price), color(Color).
+:- pendant(PendantValue, Person, 50, Color, libra), pendantNameValue(PendantValue), person(Person),  color(Color). 
+:- pendant(PendantValue, beth, 50, Color, Sign), pendantNameValue(PendantValue), color(Color), sign(Sign).
+:- pendant(PendantValue, beth, Price, Color, libra), pendantNameValue(PendantValue), price(Price), color(Color).
 
 % Rule 3:
-:- pendant(U, Person, Price, red, aquarius), pendantNameValue(U), person(Person), price(Price).
+:- pendant(PendantValue, Person, Price, red, aquarius), pendantNameValue(PendantValue), person(Person), price(Price).
 
 % Rule 4:
-rule4 :- pendant(U, Person, 50, Color, scorpio), pendantNameValue(U), person(Person), color(Color).
+rule4 :- pendant(PendantValue, Person, 50, Color, scorpio), pendantNameValue(PendantValue), person(Person), color(Color).
         
-        :- pendant(U, beth, Price, Color, scorpio), pendantNameValue(U), price(Price), color(Color).
+        :- pendant(PendantValue, beth, Price, Color, scorpio), pendantNameValue(PendantValue), price(Price), color(Color).
 
 % Rule 5:
 rule5 :- pendant(XavierPendant, xavier, Xavier_Price, Color, Xavier_Sign), 
@@ -45,9 +45,9 @@ rule5 :- pendant(XavierPendant, xavier, Xavier_Price, Color, Xavier_Sign),
 
         pendantNameValue(XavierPendant), pendantNameValue(Pendant2), person(Person), price(Xavier_Price), price(P1_Price), color(Color), sign(Xavier_Sign), sign(Pendant2_Sign).%, XavierPendant != Pendant2.%, 
 
-        :- pendant (U, xavier, 50, Color, Sign), pendantNameValue(U), color(Color), sign(Sign).
-        :- pendant (U, xavier, Price, blue, Sign), pendantNameValue(U), price(Price), sign(Sign).
-        :- pendant(U, Person, 35, blue, Sign), pendantNameValue(U), person(Person), sign(Sign).
+        :- pendant (PendantValue, xavier, 50, Color, Sign), pendantNameValue(PendantValue), color(Color), sign(Sign).
+        :- pendant (PendantValue, xavier, Price, blue, Sign), pendantNameValue(PendantValue), price(Price), sign(Sign).
+        :- pendant(PendantValue, Person, 35, blue, Sign), pendantNameValue(PendantValue), person(Person), sign(Sign).
 
 % Rule 6:
 rule6 :- pendant(BethPendant, beth, Beth_Price, Color, Beth_Sign), 
