@@ -1,7 +1,7 @@
 % Author: Anthony Grieco
 % Date: 11/16/2022
 % Description: See "puzzle2.pdf" in Directory. Written in Answer Set Prolog (Clingo, Potassco Lab).
-% IMPORTANT NOTE: Because ASP cannot process floating point numbers, all values that originally had a piece of data that could potentially be a decimal has been multiplied by 100 so that everything of that particular type can be represented and manipulated as integers.
+% IMPORTANT NOTE: Because ASP cannot process floating point numbers, the "steepTime" values been multiplied by 100 so that everything of that particular type can be represented and manipulated as integers (because ASP cannot handle decimals).
 
 % Literals:
 % coffeeName(c).
@@ -72,9 +72,54 @@ rule4 :- coffeeType(CoffeeValue, stHelena, Price, Temp, 45), coffeeNameValue(Cof
 % rule5 :- not stHelena(_, 19500, _).
 
 % Rule 6:
+rule6 :- coffeeType(CoffeeValue, Name, 80, Temp, 300), 
+        coffeeNameValue(CoffeeValue), coffeeName(Name), temperature(Temp).
+
+rule6 :- coffeeType(CoffeeValue, Name, Price, 200, 300), 
+        coffeeNameValue(CoffeeValue), coffeeName(Name), price(Price).
+
+    :- not rule6.
+
+    :- coffeeType(CoffeeValue, Name, 80, 200, STime), coffeeNameValue(CoffeeValue), coffeeName(Name), steepTime(STime).
 % rule6 :- property(Coffee1, 300, steepTime), steep3MinutesCost(Coffee1), steep3MinutesTemp(Coffee1).
+
+% Rule 7:
+rule7 :- coffeeType(CoffeeValue, fazenda, 50, Temp, STime), 
+        coffeeNameValue(CoffeeValue), temperature(Temp), steepTime(STime).
+
+rule7 :- coffeeType(CoffeeValue, Name, 50, 210, STime), 
+        coffeeNameValue(CoffeeValue), coffeeName(Name), steepTime(STime).
+
+    :- not rule7.
+
+    :- coffeeType(CoffeeValue, fazenda, Price, 210, STime), coffeeNameValue(CoffeeValue), price(Price), steepTime(STime).
 % rule7 :- coffee_50DollarsRule1, coffee_50DollarsRule2.
+
+% Rule 8:
+rule8 :- coffeeType(C1, Name, C1_Price, C1_Temp, 350),
+        coffeeType(C2, blueMountain, C2_Price, C2_Temp, STime),
+        C1_Price = C2_Price + 40,
+        coffeeNameValue(C1), coffeeNameValue(C2), price(C1_Price), price(C2_Price), temperature(C1_Temp), temperature(C2_Temp), steepTime(STime).
+    
+    :- not rule8.
+
+    :- coffeeType(CoffeeType, blueMountain, Price, Temp, 350), coffeeNameValue(CoffeeValue), price(Price), temperature(Temp).
 % rule8 :- property(Coffee1, 350, steepTime), property(Coffee1, BM_Price + 4000, price), blueMountain(BM_Price, _, _).
+
+% Rule 9:
+rule9 :- coffeeType(C1, C1_Name, C1_Price, 205, 100), 
+        coffeeType(C2, blueMountain, 60, C2_Temp, C2_STime), 
+        coffeeNameValue(C1), coffeeNameValue(C2), coffeeName(C1_Name), price(C1_Price), temperature(C2_Temp), steepTime(C2_STime).
+
+rule9 :- coffeeType(C1, blueMountain, C1_Price, 205, C1_STime), 
+        coffeeType(C2, C2_Name, 60, C2_Temp, 100), 
+        coffeeNameValue(C1), coffeeNameValue(C2), coffeeName(C2_Name), price(C1_Price), temperature(C2_Temp), steepTime(C1_STime).
+
+    :- not rule9.
+
+    :- coffeeType(CoffeeValue, Name, 60, 205, STime), coffeeNameValue(CoffeeValue), coffeeName(Name), steepTime(STime).
+    :- coffeeType(CoffeeValue, blueMountain, Price, Temp, 100), coffeeNameValue(CoffeeValue), price(Price), temperature(Temp).
+
 % rule9 :- coffee_SteepTemp205_OR_50Dollars_Rule1(Coffee1), coffee_SteepTemp205_OR_50Dollars_Rule2(Coffee1).
 
 % % For Rule 3: The Fazenda must be assigned a Steep Temperature of 200 Degrees Farenheit or a Steep Time of 3.5 minutes (with La Esmarelda being assigned the value not given to Fazenda)
