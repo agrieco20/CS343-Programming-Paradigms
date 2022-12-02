@@ -13,6 +13,7 @@ computerName(one; two; three; four; five).
 % Should select which computer is Andrews
 %%%%% andrews(ComputerName, Screen, Processor, HardDisk, Price), computerName(ComputerName), screen(Screen), processor(Processor), hardDisk(HardDisk), price(Price).
 % 1{andrews(ComputerName, Screen, Processor, HardDisk, Price): computerName(ComputerName)}1 :- screen(Screen), processor(Processor), hardDisk(HardDisk), price(Price).
+1{andrews(C): computerName(C)}1.
 
 % Every type of computer ("computerType") is assigned particular values (screen, processor, hardDisk and price) that describe it
 1{computerType(ComputerName, Screen, Processor, HardDisk, Price): screen(Screen), processor(Processor), hardDisk(HardDisk), price(Price)}1 :- computerName(ComputerName).
@@ -29,6 +30,8 @@ computerName(one; two; three; four; five).
 rule1 :- computerType(C1, C1_Screen, _, _, C1_Price), %ANDREWS
         computerType(C2, _, C2_Processor, _, C2_Price),
         computerType(C3, 215, C3_Processor, _, _),
+
+        andrews(C1),
         
         C2_Price = C1_Price + 300,
         C2_Processor = C3_Processor + 4,
@@ -41,9 +44,9 @@ rule1 :- computerType(C1, C1_Screen, _, _, C1_Price), %ANDREWS
     :- not rule1.
 
 % Rule 2:
-
 rule2 :- computerType(C1, C1_Screen, _, C1_HardDisk, _), %ANDREWS
         C1_Screen != 270,
+        andrews(C1), %ANDREWS
 
         % andrews(C1, C1_Screen, _, C1_HardDisk, _), %ANDREWS
 
@@ -183,4 +186,4 @@ computer5 :- computerType(five, 270, Processor, HardDisk, Price), processor(Proc
 :- not computer5.
 
 #show computerType/5.
-% #show andrews/5.
+#show andrews/1.
