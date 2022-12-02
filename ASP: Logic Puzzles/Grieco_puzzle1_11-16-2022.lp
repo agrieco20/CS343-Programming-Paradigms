@@ -24,7 +24,7 @@ computerName(one; two; three; four; five).
 :- computerType(C1, _, _, _, Price), computerType(C2, _, _, _, Price), computerName(C1), computerName(C2), price(Price), C1 != C2.
 
 % Rules:
-
+  
 % Rule 1:
 rule1 :- computerType(C1, _, _, _, C1_Price), %ANDREWS
         computerType(C2, _, C2_Processor, _, C2_Price),
@@ -57,7 +57,7 @@ rule2 :- computerType(C1, C1_Screen, _, C1_HardDisk, _), %ANDREWS
         C5_HardDisk < C6_HardDisk,
 
         computerType(C6, _, 27, C6_HardDisk, _),
-        computerName(C1), computerName(C2), computerName(C3), computerName(C4), computerName(C5), computerName(C6), screen(C1_Screen), screen(C5_Screen), hardDisk(C1_HardDisk), hardDisk(C5_HardDisk), hardDisk(C6_HardDisk).
+        computerName(C1), computerName(C2), computerName(C3), computerName(C4), computerName(C5), computerName(C6), screen(C1_Screen), screen(C5_Screen), hardDisk(C1_HardDisk), hardDisk(C5_HardDisk), hardDisk(C6_HardDisk), C6 != C1, C6 != C5, C6 != C2.
     
     :- not rule2.
 
@@ -154,17 +154,19 @@ rule3_2 :- computerType(C1, 150, C1_Processor, _, _),
 :- computerType(ComputerName, 270, _, 320, _), computerName(ComputerName).
 
 rule4 :- computerType(C1, C1_Screen, C1_Processor, 500, _),
-    computerType(C2, C2_Screen, C2_Processor, _, 699),
+    computerType(C2, C2_Screen, C2_Processor, C2_HardDisk, 699),
 
     C1_Screen > C2_Screen,
     C1_Processor > C2_Processor,
 
+    C2_HardDisk != 320,
+
     % computerName(C1; C2), screen(C1_Screen; C2_Screen), processor(C1_Processor; C2_Processor).
-    computerName(C1), computerName(C2), screen(C1_Screen), screen(C2_Screen), processor(C1_Processor), processor(C2_Processor).
+    computerName(C1), computerName(C2), screen(C1_Screen), screen(C2_Screen), processor(C1_Processor), processor(C2_Processor), hardDisk(C2_HardDisk).
 
     :- not rule4.
 
-:- computerType(ComputerName, 320, _, _, 699), computerName(ComputerName).
+% :- computerType(ComputerName, _, _, 320, 699), computerName(ComputerName).
 
 % Ensures that each computerType can only be assigned to one computerValue
 computer1 :- computerType(one, 130, Processor, HardDisk, Price), processor(Processor), hardDisk(HardDisk), price(Price).
