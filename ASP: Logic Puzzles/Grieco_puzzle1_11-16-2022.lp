@@ -26,16 +26,17 @@ computerName(one; two; three; four; five).
 % Rules:
   
 % Rule 1:
-rule1 :- computerType(C1, _, _, _, C1_Price), %ANDREWS
+rule1 :- computerType(C1, C1_Screen, _, _, C1_Price), %ANDREWS
         computerType(C2, _, C2_Processor, _, C2_Price),
         computerType(C3, 215, C3_Processor, _, _),
         
         C2_Price = C1_Price + 300,
         C2_Processor = C3_Processor + 4,
+        C1_Screen != 215,
 
         % andrews(C1, _, _, _, C1_Price), %ANDREWS
 
-        computerName(C1), computerName(C2), computerName(C3), processor(C2_Processor), processor(C3_Processor), price(C1_Price), price(C2_Price).
+        computerName(C1), computerName(C2), computerName(C3), processor(C2_Processor), processor(C3_Processor), price(C1_Price), price(C2_Price), screen(C1_Screen).
 
     :- not rule1.
 
@@ -57,7 +58,7 @@ rule2 :- computerType(C1, C1_Screen, _, C1_HardDisk, _), %ANDREWS
         C5_HardDisk < C6_HardDisk,
 
         computerType(C6, _, 27, C6_HardDisk, _),
-        computerName(C1), computerName(C2), computerName(C3), computerName(C4), computerName(C5), computerName(C6), screen(C1_Screen), screen(C5_Screen), hardDisk(C1_HardDisk), hardDisk(C5_HardDisk), hardDisk(C6_HardDisk), C6 != C1, C6 != C5, C6 != C2.
+        computerName(C1), computerName(C2), computerName(C3), computerName(C4), computerName(C5), computerName(C6), screen(C1_Screen), screen(C5_Screen), hardDisk(C1_HardDisk), hardDisk(C5_HardDisk), hardDisk(C6_HardDisk).%, C6 != C1, C6 != C5, C6 != C2.
     
     :- not rule2.
 
@@ -147,26 +148,26 @@ rule3_2 :- computerType(C1, 150, C1_Processor, _, _),
 
     :- not rule3_2.
 
-    :- computerType(ComputerValue, 150, _, _, 999), computerName(ComputerName).
-    :- computerType(ComputerValue, 150, _, _, 1349), computerName(ComputerName).
+    :- computerType(ComputerName, 150, _, _, 999), computerName(ComputerName).
+    :- computerType(ComputerName, 150, _, _, 1349), computerName(ComputerName).
 
 % Rule 4:
 :- computerType(ComputerName, 270, _, 320, _), computerName(ComputerName).
 
 rule4 :- computerType(C1, C1_Screen, C1_Processor, 500, _),
-    computerType(C2, C2_Screen, C2_Processor, C2_HardDisk, 699),
+    computerType(C2, C2_Screen, C2_Processor, _, 699),
 
     C1_Screen > C2_Screen,
     C1_Processor > C2_Processor,
 
-    C2_HardDisk != 320,
+    % C2_HardDisk != 320,
 
     % computerName(C1; C2), screen(C1_Screen; C2_Screen), processor(C1_Processor; C2_Processor).
-    computerName(C1), computerName(C2), screen(C1_Screen), screen(C2_Screen), processor(C1_Processor), processor(C2_Processor), hardDisk(C2_HardDisk).
+    computerName(C1), computerName(C2), screen(C1_Screen), screen(C2_Screen), processor(C1_Processor), processor(C2_Processor).%, hardDisk(C2_HardDisk).
 
     :- not rule4.
 
-% :- computerType(ComputerName, _, _, 320, 699), computerName(ComputerName).
+:- computerType(ComputerName, _, _, 320, 699), computerName(ComputerName).
 
 % Ensures that each computerType can only be assigned to one computerValue
 computer1 :- computerType(one, 130, Processor, HardDisk, Price), processor(Processor), hardDisk(HardDisk), price(Price).
