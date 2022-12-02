@@ -31,7 +31,7 @@ rule1 :- computerType(C1, C1_Screen, _, _, C1_Price), %ANDREWS
         computerType(C2, _, C2_Processor, _, C2_Price),
         computerType(C3, 215, C3_Processor, _, _),
 
-        andrews(C1),
+        andrews(C1), %ANDREWS
         
         C2_Price = C1_Price + 300,
         C2_Processor = C3_Processor + 4,
@@ -60,6 +60,8 @@ rule2 :- computerType(C1, C1_Screen, _, C1_HardDisk, _), %ANDREWS
         C5_HardDisk > C1_HardDisk,
         C5_HardDisk < C6_HardDisk,
 
+        not C5 = C2, not C5 = C3, not C5 = C4,
+
         computerType(C6, _, 27, C6_HardDisk, _),
         computerName(C1), computerName(C2), computerName(C3), computerName(C4), computerName(C5), computerName(C6), screen(C1_Screen), screen(C5_Screen), hardDisk(C1_HardDisk), hardDisk(C5_HardDisk), hardDisk(C6_HardDisk).%, C6 != C1, C6 != C5, C6 != C2.
     
@@ -68,6 +70,11 @@ rule2 :- computerType(C1, C1_Screen, _, C1_HardDisk, _), %ANDREWS
     :- computerType(ComputerName, _, 20, 250, _), computerName(ComputerName).
     :- computerType(ComputerName, _, 20, _, 1149), computerName(ComputerName).
     :- computerType(ComputerName, _, _, 250, 1149), computerName(ComputerName).
+    
+    :- computerType(ComputerName, _, 20, _, _), andrews(ComputerName).
+    :- computerType(ComputerName,  _, _, 250, _), andrews(ComputerName).
+    :- computerType(ComputerName,  _, _, _, 1149), andrews(ComputerName).
+    
 
     %% -----
     %% Describes which computers CANNOT be Andrew's
