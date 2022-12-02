@@ -29,7 +29,7 @@ computerName(one; two; three; four; five).
 
 % andrews(ComputerName, Screen, Processor, HardDisk, Price), computerName(ComputerName), screen(Screen), processor(Processor), hardDisk(HardDisk), price(Price).
 
-1{andrews(ComputerName, Screen, Processor, HardDisk, Price): screen(Screen), processor(Processor), hardDisk(HardDisk), price(Price)}1 :- computerName(ComputerName).
+% 1{andrews(ComputerName, Screen, Processor, HardDisk, Price): screen(Screen), processor(Processor), hardDisk(HardDisk), price(Price)}1 :- computerName(ComputerName).
 
 
 % Every type of computer ("computerType") is assigned particular values (screen, processor, hardDisk and price) that describe it
@@ -45,14 +45,14 @@ computerName(one; two; three; four; five).
 % Rules:
 
 % Rule 1:
-rule1 :- computerType(C1, _, _, _, C1_Price),
+rule1 :- computerType(C1, _, _, _, C1_Price), %ANDREWS
         computerType(C2, _, C2_Processor, _, C2_Price),
         computerType(C3, 215, C3_Processor, _, _),
         
         C2_Price = C1_Price + 300,
         C2_Processor = C3_Processor + 4,
 
-        andrews(C1, _, _, _, C1_Price), % Defines which is Andrews Computer
+        % andrews(C1, _, _, _, C1_Price), % Defines which is Andrews Computer
 
         computerName(C1), computerName(C2), computerName(C3), processor(C2_Processor), processor(C3_Processor), price(C1_Price), price(C2_Price).
         % computerName(C2), computerName(C3), screen(C2_Screen), processor(C2_Processor), processor(C3_Processor), hardDisk(C2_HardDisk), hardDisk(C3_HardDisk), price(C2_Price), price(C3_Price).
@@ -62,28 +62,65 @@ rule1 :- computerType(C1, _, _, _, C1_Price),
 % rule1 :- andrews(O1), property(O3, 215, screen), property(O3, P3, processor), property(O2, P3 + 4, processor), property(O1, Price1, price), property(O2, Price1 + 3000, price) . %% , computer(o1), computer(o2), computer(o3), priceType(price1), processorType(p3).
 
 % Rule 2:
-% rule2 :- computerType(C1, C1_Screen, C1_Processor, C1_HardDisk, C1_Price), %ANDREWS
-%         C1_Screen != 270,
-%         computerType(C2, C2_Screen, 20, C2_HardDisk, C2_Price),
-%         computerType(C3, C3_Screen, C3_Processor, 250, C3_Price),
-%         computerType(C4, C4_Screen, C4_Processor, C4_HardDisk, 1149),
-%         computerType(C5, C5_Screen, C5_Processor, C5_HardDisk, C5_Price),
-%         C5_Screen != 150,
+% rule2 :- computerType(C1, C1_Screen, C1_Processor, C1_HardDisk, _), %ANDREWS
+%         not C1_Screen = 270,
+%         computerType(C2, _, 20, _, _),
+%         computerType(C3, _, _, 250, _),
+%         computerType(C4, _, _, _, 1149),
+%         computerType(C5, C5_Screen, _, C5_HardDisk, _),
+%         not C5_Screen = 150,
 
 %         C5_HardDisk > C1_HardDisk,
 
-%         computerType(C6, C6_Screen, 27, C6_HardDisk, C6_Price),
+%         computerType(C6, _, 27, C6_HardDisk, _),
 
 %         C5_HardDisk < C6_HardDisk,
+%         not C1_Processor = 27,
 
-%         computerName(C1;C2;C3;C4;C5;C6), screen(C1_Screen; C2_Screen; C3_Screen; C4_Screen; C5_Screen; C6_Screen), processor(C1_Processor; C3_Processor; C4_Processor; C5_Processor), hardDisk(C1_HardDisk; C2_HardDisk; C4_HardDisk; C5_HardDisk; C6_HardDisk), price(C1_Price; C2_Price; C3_Price; C5_Price; C6_Price).
+%         computerName(C1;C2;C3;C4;C5;C6), screen(C1_Screen; C5_Screen), processor(C1_Processor), hardDisk(C1_HardDisk; C5_HardDisk; C6_HardDisk).
 
 %     :- not rule2.
 
-        
-
 % rule2 :- andrews(O1), not property(O1, 270, screen), property(O2, 20, processor), property(O3, 2500, hardDisk), property(O4, 11490, price), not property(O5, 150, screen), property(O1, HD1, hardDisk), property(O5, HD5, hardDisk), not property(O5, HD1, hardDisk), HD5 > HD1, not property(O5, 27, processor), property(COMP1, 27, processor), property(COMP1, HD_COMP1, hardDisk), HD5 < HD_COMP1.
+
+% Rule 3:
+rule3_1 :- computerType(ComputerName, Screen, 20, 320, Price),
+        computerName(ComputerName), screen(Screen), price(Price).
+
+rule3_1 :- computerType(ComputerName, Screen, 23, 320, Price),
+        computerName(ComputerName), screen(Screen), price(Price).
+    
+    :- not rule3_1.
+
+rule3_2 :- computerType(C1, 150, C1_Processor, _, _),
+    computerType(C2, _, C2_Processor, _, 999),
+    computerType(C3, _, C3_Processor, _, 1349),
+    
+    C1_Processor > C2_Processor,
+    C1_Processor < C3_Processor,
+
+    computerName(C1; C2; C3), processor(C1_Processor; C2_Processor; C3_Processor).
+
+    :- not rule3_2.
+
+
 % rule3 :- property(O1, 3200, hardDisk), processorRule1(O1), processorRule2(O1), property(O2, 150, screen), property(O2, P2, processor), property(COMP1, 9990, price), property(COMP1, COMP_P1, processor), property(COMP2, 13490, processor), property(COMP2, COMP_P2, processor), P2 > COMP_P1, P2 < COMP_P2.
+
+% Rule 4:
+:- computerType(ComputerName, 270, _, 320, _).
+
+rule4 :- computerType(C1, C1_Screen, C1_Processor, 500, _),
+    computerType(C2, C2_Screen, C2_Processor, _, 699),
+
+    C1_Screen > C2_Screen,
+    C1_Processor > C2_Processor,
+
+    computerName(C1; C2), screen(C1_Screen; C2_Screen), processor(C1_Processor; C2_Processor).
+
+    :- not rule4.
+
+:- computerType(ComputerName, 320, _, _, 699).
+
 % rule4 :- property(O1, 270, screen), not property(O1, 3200, hardDisk), property(O2, 5000, hardDisk), property(O2, P2, processor), property(O2, S2, screen), property(O3, P3, processor), property(O3, S3, screen), P2 > P3, S2 > S3, property(O3, 6990, price), not property(O3, 3200, hardDisk).
 
 % For Rule 3: "O1" must be assigned either the 2.0 MHz or the 2.3 MHz Processor (Only one of them may be assigned to O1)
@@ -115,4 +152,4 @@ computer5 :- computerType(five, 270, Processor, HardDisk, Price), processor(Proc
 :- not computer5.
 
 #show computerType/5.
-#show andrews/5.
+% #show andrews/5.
