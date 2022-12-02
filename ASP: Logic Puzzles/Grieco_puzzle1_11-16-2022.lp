@@ -3,23 +3,6 @@
 % Description: See "puzzle1.pdf" in Directory. Written in Answer Set Prolog (Clingo, Potassco Lab). 
 % IMPORTANT NOTE: Because ASP cannot process floating point numbers, the "processor" and "screen" values been multiplied by 10 so that everything of that particular type can be represented and manipulated as integers (because ASP cannot handle decimals).
 
-% Literals:
-% screenSize(SS).
-% processor(P).
-% hardDisk(HD).
-% price(M).
-% computer(o1).
-% computer(o2).
-% computer(o3).
-% computer(O4).
-% computer(O5).
-% computer(COMP1).
-% priceType(price1).
-% processorType(p3).
-
-% andrews(o1). % Used to describes the properties of Andrew's Computer
-% property(computerName, numericValue, attribute). % For a property of a particular computer, that computer has been assigned a specific "attribute" of "numericValue"
-
 screen(130; 150; 156; 215; 270).
 processor(20; 23; 25; 27; 31).
 hardDisk(250; 320; 500; 750; 1024).
@@ -31,7 +14,6 @@ computerName(one; two; three; four; five).
 
 % 1{andrews(ComputerName, Screen, Processor, HardDisk, Price): screen(Screen), processor(Processor), hardDisk(HardDisk), price(Price)}1 :- computerName(ComputerName).
 
-
 % Every type of computer ("computerType") is assigned particular values (screen, processor, hardDisk and price) that describe it
 1{computerType(ComputerName, Screen, Processor, HardDisk, Price): screen(Screen), processor(Processor), hardDisk(HardDisk), price(Price)}1 :- computerName(ComputerName).
 
@@ -40,7 +22,6 @@ computerName(one; two; three; four; five).
 :- computerType(C1, _, Processor, _, _), computerType(C2, _, Processor, _, _), computerName(C1), computerName(C2), processor(Processor), C1 != C2.
 :- computerType(C1, _, _, HardDisk, _), computerType(C2, _, _, HardDisk, _), computerName(C1), computerName(C2), hardDisk(HardDisk), C1 != C2.
 :- computerType(C1, _, _, _, Price), computerType(C2, _, _, _, Price), computerName(C1), computerName(C2), price(Price), C1 != C2.
-
 
 % Rules:
 
@@ -55,33 +36,64 @@ rule1 :- computerType(C1, _, _, _, C1_Price), %ANDREWS
         % andrews(C1, _, _, _, C1_Price), % Defines which is Andrews Computer
 
         computerName(C1), computerName(C2), computerName(C3), processor(C2_Processor), processor(C3_Processor), price(C1_Price), price(C2_Price).
-        % computerName(C2), computerName(C3), screen(C2_Screen), processor(C2_Processor), processor(C3_Processor), hardDisk(C2_HardDisk), hardDisk(C3_HardDisk), price(C2_Price), price(C3_Price).
 
     :- not rule1.
 
-% rule1 :- andrews(O1), property(O3, 215, screen), property(O3, P3, processor), property(O2, P3 + 4, processor), property(O1, Price1, price), property(O2, Price1 + 3000, price) . %% , computer(o1), computer(o2), computer(o3), priceType(price1), processorType(p3).
-
-% Rule 2:
-% rule2 :- computerType(C1, C1_Screen, C1_Processor, C1_HardDisk, _), %ANDREWS
+% % Rule 2:
+% rule2 :- computerType(_, C1_Screen, C1_Processor, C1_HardDisk, C1_Price), %ANDREWS
 %         not C1_Screen = 270,
-%         computerType(C2, _, 20, _, _),
-%         computerType(C3, _, _, 250, _),
-%         computerType(C4, _, _, _, 1149),
-%         computerType(C5, C5_Screen, _, C5_HardDisk, _),
+
+%         %%%% Next 3 lines cause miniconda to bug out
+%         % computerType(C2, _, 20, _, _),
+%         % computerType(C3, _, _, 250, _),
+%         % computerType(C4, _, _, _, 1149),
+
+%         % %%%%---------
+%         %Work around for the above 3 lines of code causing the program to lag out (likely too many variables):
+%         C1_Processor != 20,
+%         C5_Processor != 20,
+
+%         C1_HardDisk != 250,
+%         C5_HardDisk != 250, 
+%         C6_HardDisk != 250,
+        
+%         C1_Price != 1149,
+%         C5_Price != 1149,
+%         C6_Price != 1149,
+%         % %%%%---------
+
+%         computerType(_, C5_Screen, C5_Processor, C5_HardDisk, C5_Price),
 %         not C5_Screen = 150,
 
 %         C5_HardDisk > C1_HardDisk,
 
-%         computerType(C6, _, 27, C6_HardDisk, _),
+%         computerType(_, _, 27, C6_HardDisk, C6_Price),
 
 %         C5_HardDisk < C6_HardDisk,
-%         not C1_Processor = 27,
 
-%         computerName(C1;C2;C3;C4;C5;C6), screen(C1_Screen; C5_Screen), processor(C1_Processor), hardDisk(C1_HardDisk; C5_HardDisk; C6_HardDisk).
+%         % computerName(C1;C2;C3;C4;C5;C6), screen(C1_Screen; C5_Screen), processor(C1_Processor; C5_Processor), hardDisk(C1_HardDisk; C5_HardDisk; C6_HardDisk).
+%         % computerName(C1;C5;C6), screen(C1_Screen; C5_Screen), processor(C1_Processor; C5_Processor), hardDisk(C1_HardDisk; C5_HardDisk; C6_HardDisk).%, price(C1_Price).%price(C1_Price; C5_Price; C6_Price).
+%         screen(C1_Screen; C5_Screen), processor(C1_Processor;C5_Processor), hardDisk(C1_HardDisk; C5_HardDisk; C6_HardDisk), price(C1_Price; C5_Price; C6_Price).
+
 
 %     :- not rule2.
+    
+%     % %Work around for the above 3 lines of code causing the program to lag out (likely too many variables):
+%     :- computerType(ComputerName, _, 20, 250, _), computerName(ComputerName).
+%     % :- computerType(ComputerName, _, 20, _, 1149), computerName(ComputerName).
+%     :- computerType(ComputerName, _, _, 250, 1149), computerName(ComputerName).
+%     % rule2_2 :- computerType(ComputerName, _, 20, 250, _), computerName(ComputerName).
+%     % rule2_3 :- computerType(ComputerName, _, 20, _, 1149), computerName(ComputerName).
+%     % rule2_4 :- computerType(ComputerName, _, _, 250, 1149), computerName(ComputerName).
+%     % :- not rule2_2.
+%     % :- not rule2_3.
+%     % :- not rule2_4.
 
-% rule2 :- andrews(O1), not property(O1, 270, screen), property(O2, 20, processor), property(O3, 2500, hardDisk), property(O4, 11490, price), not property(O5, 150, screen), property(O1, HD1, hardDisk), property(O5, HD5, hardDisk), not property(O5, HD1, hardDisk), HD5 > HD1, not property(O5, 27, processor), property(COMP1, 27, processor), property(COMP1, HD_COMP1, hardDisk), HD5 < HD_COMP1.
+% % rule2_2 :- computerType(C2, _, 20, _, _),
+% %         computerType(C3, _, _, 250, _),
+% %         computerType(C4, _, _, _, 1149),
+% %         computerName(C2;C3;C4).
+% %     :- not rule2_2.
 
 % Rule 3:
 rule3_1 :- computerType(ComputerName, Screen, 20, 320, Price),
@@ -103,9 +115,6 @@ rule3_2 :- computerType(C1, 150, C1_Processor, _, _),
 
     :- not rule3_2.
 
-
-% rule3 :- property(O1, 3200, hardDisk), processorRule1(O1), processorRule2(O1), property(O2, 150, screen), property(O2, P2, processor), property(COMP1, 9990, price), property(COMP1, COMP_P1, processor), property(COMP2, 13490, processor), property(COMP2, COMP_P2, processor), P2 > COMP_P1, P2 < COMP_P2.
-
 % Rule 4:
 :- computerType(ComputerName, 270, _, 320, _).
 
@@ -120,23 +129,6 @@ rule4 :- computerType(C1, C1_Screen, C1_Processor, 500, _),
     :- not rule4.
 
 :- computerType(ComputerName, 320, _, _, 699).
-
-% rule4 :- property(O1, 270, screen), not property(O1, 3200, hardDisk), property(O2, 5000, hardDisk), property(O2, P2, processor), property(O2, S2, screen), property(O3, P3, processor), property(O3, S3, screen), P2 > P3, S2 > S3, property(O3, 6990, price), not property(O3, 3200, hardDisk).
-
-% For Rule 3: "O1" must be assigned either the 2.0 MHz or the 2.3 MHz Processor (Only one of them may be assigned to O1)
-% processorRule1(O1) :- property(O1, 20, processor), not processorRule2(O1).
-% processorRule2(O1) :- property(O1, 23, processor), not processorRule1(O1).
-%%% % processorRule1 :- not processorRule2.
-%%% % processorRule2 :- not processorRule1.
-
-% Constraints: (The Statements defined in each of the Rules above must be true)
-% :- not rule1.
-% :- not rule2.
-% :- not rule3.
-% :- not rule4.
-
-% #show andrews/1.
-% #show andrews.
 
 % Ensures that each coffeeType can only be assigned to one coffeeValue
 computer1 :- computerType(one, 130, Processor, HardDisk, Price), processor(Processor), hardDisk(HardDisk), price(Price).
